@@ -1,0 +1,534 @@
+<div class="tprt-navigation-root">
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    data-tag="font"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    data-tag="font"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+    data-tag="font"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    data-tag="font"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    data-tag="font"
+  />
+  <style>
+    .tprt-navigation-root {  line-height: 1.15;}.tprt-navigation-root {  margin: 0;}.tprt-navigation-root * {  box-sizing: border-box;  border-width: 0;  border-style: solid;  -webkit-font-smoothing: antialiased;}.tprt-navigation-root p, .tprt-navigation-root li, .tprt-navigation-root ul, .tprt-navigation-root pre, .tprt-navigation-root div, .tprt-navigation-root h1, .tprt-navigation-root h2, .tprt-navigation-root h3, .tprt-navigation-root h4, .tprt-navigation-root h5, .tprt-navigation-root h6, .tprt-navigation-root figure, .tprt-navigation-root blockquote, .tprt-navigation-root figcaption {  margin: 0;  padding: 0;}.tprt-navigation-root button {  background-color: transparent;}.tprt-navigation-root button, .tprt-navigation-root input, .tprt-navigation-root optgroup, .tprt-navigation-root select, .tprt-navigation-root textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}.tprt-navigation-root button, .tprt-navigation-root select {  text-transform: none;}.tprt-navigation-root button, .tprt-navigation-root [type="button"], .tprt-navigation-root [type="reset"], .tprt-navigation-root [type="submit"] {  -webkit-appearance: button;  color: inherit;}.tprt-navigation-root button::-moz-focus-inner, .tprt-navigation-root [type="button"]::-moz-focus-inner, .tprt-navigation-root [type="reset"]::-moz-focus-inner, .tprt-navigation-root [type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}.tprt-navigation-root button:-moz-focus, .tprt-navigation-root [type="button"]:-moz-focus, .tprt-navigation-root [type="reset"]:-moz-focus, .tprt-navigation-root [type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}.tprt-navigation-root a {  color: inherit;  text-decoration: inherit;}.tprt-navigation-root pre {  white-space: normal;}.tprt-navigation-root input {  padding: 2px 4px;}.tprt-navigation-root img {  display: block;}.tprt-navigation-root details {  display: block;  margin: 0;  padding: 0;}.tprt-navigation-root summary::-webkit-details-marker {  display: none;}.tprt-navigation-root [data-thq="accordion"] [data-thq="accordion-content"] {  max-height: 0;  overflow: hidden;  transition: max-height 0.3s ease-in-out;  padding: 0;}.tprt-navigation-root [data-thq="accordion"] details[data-thq="accordion-trigger"][open] + [data-thq="accordion-content"] {  max-height: 1000vh;}.tprt-navigation-root details[data-thq="accordion-trigger"][open] summary [data-thq="accordion-icon"] {  transform: rotate(180deg);}.tprt-navigation-root { scroll-behavior: smooth  }
+
+
+      .tprt-navigation-root {
+        font-family: Nunito;
+        font-size: 1rem;
+      }
+
+      .tprt-navigation-root {
+        font-weight: 400;
+        font-style:normal;
+        text-decoration: undefined;
+        text-transform: undefined;
+        letter-spacing: 0.01em;
+        line-height: 1.6;
+        color: var(--color-on-surface);
+        background: var(--color-surface);
+
+        fill: var(--color-on-surface);
+      }
+
+
+
+
+
+    .tprt-navigation-root {
+      --color: rgb(89, 24, 4);
+      --spacing-lg: 1rem;
+      --spacing-md: 0.75rem;
+      --spacing-sm: 0.5rem;
+      --spacing-xl: 1.5rem;
+      --spacing-xs: 0.25rem;
+      --color-scrim: color-mix(in oklab, #000000 65%, transparent);
+      --spacing-2xl: 2rem;
+      --spacing-3xl: 3rem;
+      --spacing-4xl: 4rem;
+      --color-accent: #ff7a96;
+      --color-border: #776361;
+      --font-size-lg: clamp(1.05rem, 1.125rem, 1.25rem);
+      --font-size-sm: clamp(0.8rem, 0.9rem, 0.95rem);
+      --font-size-xl: clamp(1.2rem, 1.35rem, 1.5rem);
+      --font-size-xs: clamp(0.65rem, 0.75rem, 0.8rem);
+      --color-neutral: #776361;
+      --color-outline: #4b3f3b;
+      --color-overlay: color-mix(in oklab, #000000 40%, transparent);
+      --color-primary: #008b8b;
+      --color-surface: #fff5e6;
+      --divider-value: 1px solid var(--color-border);
+      --font-size-2xl: clamp(1.4rem, 1.6rem, 1.8rem);
+      --font-size-3xl: clamp(2.2rem, 2.4rem, 2.8rem);
+      --font-size-4xl: clamp(3rem, 3.4rem, 4rem);
+      --font-size-base: clamp(0.95rem, 1rem, 1rem);
+      --shadow-level-1: 0 2px 4px rgba(139, 69, 19, 0.15);
+      --shadow-level-2: 0 6px 16px rgba(139, 69, 19, 0.2);
+      --shadow-level-3: 0 12px 32px rgba(139, 69, 19, 0.25);
+      --color-backplate: color-mix(in oklab, #000000 55%, transparent);
+      --color-on-accent: #ffffff;
+      --color-secondary: #ff5c87;
+      --background-color: rgb(245, 232, 203);
+      --border-radius-lg: 10px;
+      --border-radius-md: 6px;
+      --border-radius-sm: 3px;
+      --border-radius-xl: 16px;
+      --color-on-primary: #fafafa;
+      --color-on-surface: #1a120f;
+      --font-family-body: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-weight-body: 400;
+      --line-height-body: 1.6;
+      --content-max-width: 76rem;
+      --border-radius-card: 6px;
+      --border-radius-full: 9999px;
+      --border-radius-none: 0px;
+      --color-on-secondary: #ffffff;
+      --font-style-heading: normal;
+      --font-weight-medium: 600;
+      --font-family-heading: "Archivo", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-weight-heading: 700;
+      --letter-spacing-body: 0.01em;
+      --line-height-heading: 1.25;
+      --dl-layout-size-large: 144px;
+      --dl-layout-size-small: 48px;
+      --dl-layout-space-unit: 16px;
+      --border-radius-control: 3px;
+      --dl-layout-size-medium: 96px;
+      --dl-layout-size-xlarge: 192px;
+      --dl-layout-size-xsmall: 16px;
+      --font-style-subheading: italic;
+      --color-surface-elevated: color-mix(in oklab, #fff5e6 92%, #ff69a0);
+      --dl-color-theme-accent1: #FFFFFF;
+      --dl-color-theme-accent2: #F5D1B0;
+      --dl-layout-radius-round: 50%;
+      --dl-layout-size-xxlarge: 288px;
+      --letter-spacing-heading: 0.02em;
+      --text-transform-heading: none;
+      --dl-color-theme-primary1: #BF4408;
+      --dl-color-theme-primary2: #E65103;
+      --dl-layout-size-maxwidth: 1400px;
+      --dl-layout-radius-radius2: 2px;
+      --dl-layout-radius-radius4: 4px;
+      --dl-layout-radius-radius8: 8px;
+      --dl-layout-space-halfunit: 8px;
+      --dl-layout-space-sixunits: 96px;
+      --dl-layout-space-twounits: 32px;
+      --dl-color-theme-secondary1: #FFFFFF;
+      --dl-color-theme-secondary2: #FBF1EB;
+      --dl-layout-space-fiveunits: 80px;
+      --dl-layout-space-fourunits: 64px;
+      --color-on-surface-secondary: #4b3f3b;
+      --dl-layout-space-threeunits: 48px;
+      --dl-color-theme-neutral-dark: #191818;
+      --dl-layout-radius-cardradius: 8px;
+      --dl-color-theme-neutral-light: #FBFAF9;
+      --dl-layout-radius-imageradius: 8px;
+      --dl-layout-radius-inputradius: 24px;
+      --dl-layout-radius-buttonradius: 24px;
+      --dl-layout-space-oneandhalfunits: 24px;
+    }
+
+    .tprt-navigation-root .btn {
+      gap: var(--spacing-xs);
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      padding: var(--spacing-md) var(--spacing-lg);
+      font-size: var(--font-size-base);
+      box-shadow: var(--shadow-level-1);
+      text-align: center;
+      transition: all 0.2s ease-in-out;
+      align-items: center;
+      font-family: var(--font-family-body);
+      font-weight: var(--font-weight-medium);
+      line-height: var(--line-height-body);
+      user-select: none;
+      white-space: nowrap;
+      border-radius: var(--border-radius-control);
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .tprt-navigation-root .btn-primary {
+      color: var(--color-on-primary);
+      border-color: var(--color-primary);
+      background-color: var(--color-primary);
+    }
+
+    .tprt-navigation-root .btn-lg {
+      padding: var(--spacing-lg) var(--spacing-xl);
+    }
+
+    .tprt-navigation-root .section-title {
+      font-size: var(--font-size-3xl);
+      font-style: var(--font-style-heading);
+      font-family: var(--font-family-heading);
+      font-weight: var(--font-weight-heading);
+      line-height: var(--line-height-heading);
+      letter-spacing: var(--letter-spacing-heading);
+      text-transform: var(--text-transform-heading);
+    }
+
+    .tprt-navigation-root .btn:focus-visible {
+      outline: 2px solid var(--color-outline);
+      outline-offset: 2px;
+    }
+
+    .tprt-navigation-root .btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .tprt-navigation-root .btn-primary:hover:not(:disabled) {
+      border-color: color-mix(in oklab, var(--color-primary) 90%, var(--color-surface));
+      background-color: color-mix(in oklab, var(--color-primary) 90%, var(--color-surface));
+    }
+
+    .tprt-navigation-root .navigation-wrapper {
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: var(--spacing-md) 0;
+      z-index: 1000;
+      position: sticky;
+      border-bottom: 2px solid #591804;
+      background-color: #f5e8cb;
+    }
+
+    .tprt-navigation-root .navigation-container {
+      gap: var(--spacing-2xl);
+      margin: 0 auto;
+      display: flex;
+      padding: 0 var(--spacing-xl);
+      max-width: var(--content-max-width);
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tprt-navigation-root .navigation-brand {
+      gap: var(--spacing-sm);
+      color: #591804;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .tprt-navigation-root .navigation-desktop-links {
+      gap: var(--spacing-xl);
+      display: flex;
+      align-items: center;
+    }
+
+    .tprt-navigation-root .navigation-actions {
+      gap: var(--spacing-md);
+      display: flex;
+      align-items: center;
+    }
+
+    .tprt-navigation-root .navigation-brand-icon {
+      color: #f5e8cb;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      border-radius: var(--border-radius-sm);
+      justify-content: center;
+      background-color: #591804;
+    }
+
+    .tprt-navigation-root .navigation-login-btn {
+      color: #f5e8cb !important;
+      border: none !important;
+      box-shadow: 4px 4px 0px rgba(89, 24, 4, 0.2);
+      border-radius: var(--border-radius-none);
+      background-color: #591804 !important;
+    }
+
+    .tprt-navigation-root .navigation-mobile-overlay {
+      inset: 0;
+      display: none;
+      z-index: 1100;
+      position: fixed;
+      min-height: 100vh;
+      overflow-y: auto;
+      flex-direction: column;
+      background-color: #f5e8cb;
+    }
+
+    .tprt-navigation-root .navigation-mobile-header {
+      top: 0;
+      display: flex;
+      padding: var(--spacing-lg) var(--spacing-xl);
+      z-index: 1110;
+      position: sticky;
+      align-items: center;
+      border-bottom: 2px solid #591804;
+      justify-content: space-between;
+      background-color: #f5e8cb;
+    }
+
+    .tprt-navigation-root .navigation-mobile-content {
+      gap: var(--spacing-3xl);
+      flex: 1;
+      display: flex;
+      padding: var(--spacing-3xl) var(--spacing-xl);
+      flex-direction: column;
+    }
+
+    .tprt-navigation-root .navigation-mobile-close {
+      color: #591804;
+      border: none;
+      cursor: pointer;
+      background: none;
+    }
+
+    .tprt-navigation-root .navigation-mobile-links {
+      gap: var(--spacing-xl);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tprt-navigation-root .navigation-mobile-footer {
+      margin-top: auto;
+      padding-bottom: var(--spacing-2xl);
+    }
+
+    .tprt-navigation-root .navigation-mobile-link {
+      color: #591804;
+      font-size: var(--font-size-2xl);
+      font-family: var(--font-family-heading);
+      border-bottom: 1px solid rgba(89, 24, 4, 0.1);
+      padding-bottom: var(--spacing-md);
+      text-decoration: none;
+    }
+
+    .tprt-navigation-root .navigation-full-width-btn {
+      color: #f5e8cb !important;
+      width: 100%;
+      border-radius: var(--border-radius-none) !important;
+      background-color: #591804 !important;
+    }
+
+    .tprt-navigation-root .navigation-brand  .section-title {
+      color: inherit;
+      margin: 0;
+      font-size: var(--font-size-xl);
+    }
+
+    .tprt-navigation-root .navigation-login-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px rgba(89, 24, 4, 0.2);
+    }
+
+    .tprt-navigation-root .btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px rgb(89, 24, 4);
+    }
+
+    .tprt-navigation-root .btn:active {
+      transform: translate(0, 0);
+      box-shadow: 2px 2px 0px rgb(89, 24, 4);
+    }
+
+    @media(max-width: 991px) {
+      .tprt-navigation-root .navigation-desktop-links {
+        gap: var(--spacing-lg);
+      }
+    }
+
+    @media(max-width: 767px) {
+      .tprt-navigation-root .navigation-desktop-links {
+        display: none;
+      }
+      .tprt-navigation-root .navigation-login-btn {
+        display: none;
+      }
+    }
+
+    @media(max-width: 479px) {
+      .tprt-navigation-root .navigation-container {
+        padding: 0 var(--spacing-lg);
+      }
+    }
+
+    .tprt-navigation-root .navigation-container1 {
+      display: contents;
+    }
+
+    .tprt-navigation-root .navigation-thq-navigation-desktop-links-elm {
+      border: 2px dashed rgba(120, 120, 120, 0.4);
+    }
+
+    .tprt-navigation-root .navigation-container2 {
+      display: none;
+    }
+
+    .tprt-navigation-root .navigation-container3 {
+      display: contents;
+    }
+  </style>
+  <div class="navigation-container1">
+    <nav class="navigation-wrapper">
+      <div class="navigation-container">
+        <a href="index.html">
+          <div class="navigation-brand">
+            <div class="navigation-brand-icon">
+              <svg
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233a14 14 0 0 0 6.392 6.384"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+            </div>
+            <span class="section-title">外北陆热线</span>
+          </div>
+        </a>
+        <div
+          class="navigation-thq-navigation-desktop-links-elm navigation-desktop-links"
+        ></div>
+        <div class="navigation-actions">
+          <a href="login.html">
+            <div class="navigation-login-btn btn-primary btn">
+              <svg
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                  <circle r="4" cx="12" cy="7"></circle>
+                </g>
+              </svg>
+              <span>立即登录</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </nav>
+    <div id="mobile-overlay" class="navigation-mobile-overlay">
+      <div class="navigation-mobile-header">
+        <a href="index.html">
+          <div class="navigation-brand">
+            <span class="section-title">外北陆热线</span>
+          </div>
+        </a>
+        <button
+          id="mobile-close"
+          aria-label="关闭菜单"
+          class="navigation-mobile-close"
+        >
+          <svg
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <g
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="3" rx="2" width="18" height="18"></rect>
+              <path d="M3 9h18M9 16l3-3l3 3"></path>
+            </g>
+          </svg>
+        </button>
+      </div>
+      <div class="navigation-mobile-content">
+        <div class="navigation-mobile-links">
+          <a href="index.html">
+            <div class="navigation-mobile-link"><span>登录首页</span></div>
+          </a>
+          <a href="register.html">
+            <div class="navigation-mobile-link"><span>账号注册</span></div>
+          </a>
+          <a href="chat.html">
+            <div class="navigation-mobile-link"><span>聊天室</span></div>
+          </a>
+        </div>
+        <div class="navigation-mobile-footer">
+          <a href="login.html">
+            <div class="btn-lg btn-primary navigation-full-width-btn btn">
+              <span>开始拨打热线</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="navigation-container2">
+      <div class="navigation-container3">
+        <script defer data-name="navigation-logic">
+          document.addEventListener('DOMContentLoaded', function() {
+            (function(){
+              const mobileToggle = document.getElementById("mobile-toggle")
+              const mobileClose = document.getElementById("mobile-close")
+              const mobileOverlay = document.getElementById("mobile-overlay")
+
+              const openMobileMenu = () => {
+                mobileOverlay.style.display = "flex"
+                document.body.style.overflow = "hidden"
+                mobileToggle.setAttribute("aria-expanded", "true")
+              }
+
+              const closeMobileMenu = () => {
+                mobileOverlay.style.display = "none"
+                document.body.style.overflow = ""
+                mobileToggle.setAttribute("aria-expanded", "false")
+              }
+
+              mobileToggle.addEventListener("click", openMobileMenu)
+              mobileClose.addEventListener("click", closeMobileMenu)
+
+              // Close menu when clicking on a link
+              const mobileLinks = document.querySelectorAll(".navigation-mobile-link")
+              mobileLinks.forEach((link) => {
+                link.addEventListener("click", closeMobileMenu)
+              })
+
+              // Handle ESC key to close menu
+              document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape" && mobileOverlay.style.display === "flex") {
+                  closeMobileMenu()
+                }
+              })
+            })()
+          });
+        </script>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Register Page</title>
+    <meta property="og:title" content="Register Page" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+
+    <style data-tag="reset-style-sheet">
+      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;  -webkit-font-smoothing: antialiased;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;  color: inherit;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}pre {  white-space: normal;}input {  padding: 2px 4px;}img {  display: block;}details {  display: block;  margin: 0;  padding: 0;}summary::-webkit-details-marker {  display: none;}[data-thq="accordion"] [data-thq="accordion-content"] {  max-height: 0;  overflow: hidden;  transition: max-height 0.3s ease-in-out;  padding: 0;}[data-thq="accordion"] details[data-thq="accordion-trigger"][open] + [data-thq="accordion-content"] {  max-height: 1000vh;}details[data-thq="accordion-trigger"][open] summary [data-thq="accordion-icon"] {  transform: rotate(180deg);}html { scroll-behavior: smooth  }
+    </style>
+    <style data-tag="default-style-sheet">
+      html {
+        font-family: Nunito;
+        font-size: 1rem;
+      }
+
+      body {
+        font-weight: 400;
+        font-style:normal;
+        text-decoration: undefined;
+        text-transform: undefined;
+        letter-spacing: 0.01em;
+        line-height: 1.6;
+        color: var(--color-on-surface);
+        background: var(--color-surface);
+
+        fill: var(--color-on-surface);
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/animate.css@4.1.1/animate.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css"
+    />
+  </head>
+  <body>
+    <link rel="stylesheet" href="./style.css" />
+    <div>
+      <link href="./register.css" rel="stylesheet" />
+
+      <div class="register-container1">
+        <navigation-wrapper class="navigation-wrapper">
+          <!--Navigation component-->
+          <div class="navigation-container1">
+            <nav class="navigation-wrapper">
+              <div class="navigation-container">
+                <a href="index.html">
+                  <div class="navigation-brand">
+                    <div class="navigation-brand-icon">
+                      <svg
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233a14 14 0 0 0 6.392 6.384"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>
+                      </svg>
+                    </div>
+                    <span class="section-title">外北陆热线</span>
+                  </div>
+                </a>
+                <div
+                  class="navigation-thq-navigation-desktop-links-elm navigation-desktop-links"
+                ></div>
+                <div class="navigation-actions">
+                  <a href="index.html">
+                    <div class="navigation-login-btn btn-primary btn">
+                      <svg
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        viewBox="0 0 24 24"
+                      >
+                        <g
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path
+                            d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
+                          ></path>
+                          <circle r="4" cx="12" cy="7"></circle>
+                        </g>
+                      </svg>
+                      <span>立即登录</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </nav>
+            <div id="mobile-overlay" class="navigation-mobile-overlay">
+              <div class="navigation-mobile-header">
+                <a href="index.html">
+                  <div class="navigation-brand">
+                    <span class="section-title">外北陆热线</span>
+                  </div>
+                </a>
+                <button
+                  id="mobile-close"
+                  aria-label="关闭菜单"
+                  class="navigation-mobile-close"
+                >
+                  <svg
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <g
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect x="3" y="3" rx="2" width="18" height="18"></rect>
+                      <path d="M3 9h18M9 16l3-3l3 3"></path>
+                    </g>
+                  </svg>
+                </button>
+              </div>
+              <div class="navigation-mobile-content">
+                <div class="navigation-mobile-links">
+                  <a href="index.html">
+                    <div class="navigation-mobile-link">
+                      <span>登录首页</span>
+                    </div>
+                  </a>
+                  <a href="register.html">
+                    <div class="navigation-mobile-link">
+                      <span>账号注册</span>
+                    </div>
+                  </a>
+                  <a href="chat.html">
+                    <div class="navigation-mobile-link">
+                      <span>聊天室</span>
+                    </div>
+                  </a>
+                </div>
+                <div class="navigation-mobile-footer">
+                  <a href="index.html">
+                    <div
+                      class="btn-lg btn-primary navigation-full-width-btn btn"
+                    >
+                      <span>开始拨打热线</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="navigation-container2">
+              <div class="navigation-container3">
+                <script defer="" data-name="navigation-logic">
+                  document.addEventListener('DOMContentLoaded', function() {
+                    (function(){
+                      const mobileToggle = document.getElementById("mobile-toggle")
+                      const mobileClose = document.getElementById("mobile-close")
+                      const mobileOverlay = document.getElementById("mobile-overlay")
+
+                      const openMobileMenu = () => {
+                        mobileOverlay.style.display = "flex"
+                        document.body.style.overflow = "hidden"
+                        mobileToggle.setAttribute("aria-expanded", "true")
+                      }
+
+                      const closeMobileMenu = () => {
+                        mobileOverlay.style.display = "none"
+                        document.body.style.overflow = ""
+                        mobileToggle.setAttribute("aria-expanded", "false")
+                      }
+
+                      mobileToggle.addEventListener("click", openMobileMenu)
+                      mobileClose.addEventListener("click", closeMobileMenu)
+
+                      // Close menu when clicking on a link
+                      const mobileLinks = document.querySelectorAll(".navigation-mobile-link")
+                      mobileLinks.forEach((link) => {
+                        link.addEventListener("click", closeMobileMenu)
+                      })
+
+                      // Handle ESC key to close menu
+                      document.addEventListener("keydown", (e) => {
+                        if (e.key === "Escape" && mobileOverlay.style.display === "flex") {
+                          closeMobileMenu()
+                        }
+                      })
+                    })()
+                  });
+                </script>
+              </div>
+            </div>
+          </div>
+        </navigation-wrapper>
+        <main class="registration-page">
+          <section class="form-section">
+            <div class="form-container">
+              <div class="form-modal">
+                <h1 class="-----hero-title hero-title">外北陆热线 - 注册</h1>
+                <form
+                  action="/api/register"
+                  method="POST"
+                  id="registrationForm"
+                  data-form-id="9a473588-b2e7-41ad-af2c-ef0cb7886164"
+                  class="register-form"
+                >
+                  <div class="input-group">
+                    <label for="username" class="section-content">账号</label>
+                    <div class="input-wrapper">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="input-icon"
+                      >
+                        <path
+                          d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
+                        ></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                      </svg>
+                      <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        required="true"
+                        minlength="3"
+                        placeholder="请输入您的账号"
+                        data-form-field-id="username"
+                        class="form-input"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group">
+                    <label for="password" class="section-content">密码</label>
+                    <div class="input-wrapper">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="input-icon"
+                      >
+                        <rect
+                          width="18"
+                          height="11"
+                          x="3"
+                          y="11"
+                          rx="2"
+                          ry="2"
+                        ></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                      </svg>
+                      <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        required="true"
+                        minlength="6"
+                        placeholder="请输入密码"
+                        data-form-field-id="password"
+                        class="form-input"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-group">
+                    <label for="confirm-password" class="section-content">
+                      再次输入密码
+                    </label>
+                    <div class="input-wrapper">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="input-icon"
+                      >
+                        <rect
+                          width="18"
+                          height="11"
+                          x="3"
+                          y="11"
+                          rx="2"
+                          ry="2"
+                        ></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                      </svg>
+                      <input
+                        type="password"
+                        id="confirm-password"
+                        name="confirm-password"
+                        required="true"
+                        placeholder="请再次输入密码"
+                        data-form-field-id="confirm-password"
+                        class="form-input"
+                      />
+                    </div>
+                  </div>
+                  <div class="button-row">
+                    <button
+                      type="submit"
+                      id="thq_button_JleT"
+                      name="button"
+                      data-form-field-id="thq_button_JleT"
+                      class="-----btn-primary -----btn-lg btn btn-primary btn-lg"
+                    >
+                      确认注册
+                    </button>
+                    <a href="index.html">
+                      <div
+                        class="-----btn-outline -----btn-lg btn btn-outline btn-lg"
+                      >
+                        <span>返回登录</span>
+                      </div>
+                    </a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </section>
+          <section class="validation-section">
+            <div class="validation-container">
+              <h2 class="-----section-title section-title">安全校验</h2>
+              <ul class="validation-list">
+                <li id="rule-length" class="validation-item">
+                  <div class="icon-box">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="status-icon"
+                    >
+                      <path d="M20 6L9 17l-5-5"></path>
+                    </svg>
+                  </div>
+                  <span class="section-content">密码长度至少为 6 位字符</span>
+                </li>
+                <li id="rule-match" class="validation-item">
+                  <div class="icon-box">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="status-icon"
+                    >
+                      <path d="M20 6L9 17l-5-5"></path>
+                    </svg>
+                  </div>
+                  <span class="section-content">
+                    两次输入的密码必须完全一致
+                  </span>
+                </li>
+                <li id="rule-username" class="validation-item">
+                  <div class="icon-box">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="status-icon"
+                    >
+                      <path d="M20 6L9 17l-5-5"></path>
+                    </svg>
+                  </div>
+                  <span class="section-content">账号需包含至少 3 个字符</span>
+                </li>
+              </ul>
+            </div>
+          </section>
+          <section class="result-section">
+            <div class="result-container">
+              <div id="registration-alert" class="alert-box">
+                <div class="alert-content">
+                  <div id="alert-icon-success" class="alert-icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
+                      ></path>
+                      <path d="m9 12l2 2l4-4"></path>
+                    </svg>
+                  </div>
+                  <div id="alert-icon-error" class="alert-icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1zm-5.5-3.5l-5 5m0-5l5 5"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div class="alert-text">
+                    <h3
+                      id="alert-title"
+                      class="-----section-subtitle section-subtitle"
+                    >
+                      注册状态
+                    </h3>
+                    <p id="alert-message" class="section-content">
+                      请填写表单并点击提交。
+                    </p>
+                  </div>
+                </div>
+                <div class="alert-actions">
+                  <button
+                    id="close-alert"
+                    class="-----btn-outline btn btn-outline btn-sm"
+                  >
+                    确定
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+        <div class="register-container2">
+          <div class="register-container3">
+            <style>
+                      @keyframes slideIn {from {transform: translateY(20px);
+              opacity: 0;}
+              to {transform: translateY(0);
+              opacity: 1;}}
+            </style>
+          </div>
+        </div>
+        <div class="register-container4">
+          <div class="register-container5">
+            <script defer="" data-name="registration-logic">
+              document.addEventListener('DOMContentLoaded', function() {
+                (function(){
+                  const form = document.getElementById("registrationForm")
+                  const usernameInput = document.getElementById("username")
+                  const passwordInput = document.getElementById("password")
+                  const confirmInput = document.getElementById("confirm-password")
+
+                  const ruleLength = document.getElementById("rule-length")
+                  const ruleMatch = document.getElementById("rule-match")
+                  const ruleUsername = document.getElementById("rule-username")
+
+                  const alertBox = document.getElementById("registration-alert")
+                  const alertTitle = document.getElementById("alert-title")
+                  const alertMessage = document.getElementById("alert-message")
+                  const iconSuccess = document.getElementById("alert-icon-success")
+                  const iconError = document.getElementById("alert-icon-error")
+                  const closeAlert = document.getElementById("close-alert")
+
+                  const validate = () => {
+                    const userVal = usernameInput.value
+                    const passVal = passwordInput.value
+                    const confirmVal = confirmInput.value
+
+                    if (userVal.length >= 3) {
+                      ruleUsername.classList.add("is-valid")
+                    } else {
+                      ruleUsername.classList.remove("is-valid")
+                    }
+
+                    if (passVal.length >= 6) {
+                      ruleLength.classList.add("is-valid")
+                    } else {
+                      ruleLength.classList.remove("is-valid")
+                    }
+
+                    if (confirmVal.length > 0 && passVal === confirmVal) {
+                      ruleMatch.classList.add("is-valid")
+                    } else {
+                      ruleMatch.classList.remove("is-valid")
+                    }
+                  }
+
+                  usernameInput.addEventListener("input", validate)
+                  passwordInput.addEventListener("input", validate)
+                  confirmInput.addEventListener("input", validate)
+
+                  form.addEventListener("submit", (e) => {
+                    e.preventDefault()
+
+                    const isUserValid = usernameInput.value.length >= 3
+                    const isPassValid = passwordInput.value.length >= 6
+                    const isMatchValid = passwordInput.value === confirmInput.value
+
+                    alertBox.hidden = false
+
+                    if (isUserValid && isPassValid && isMatchValid) {
+                      alertTitle.textContent = "注册成功！"
+                      alertMessage.textContent = "欢迎加入外北陆热线。您的账号已创建，现在可以返回登录界面。"
+                      iconSuccess.hidden = false
+                      iconError.hidden = true
+                      alertBox.style.borderColor = "#2ecc71"
+                      form.reset()
+                      validate()
+                    } else {
+                      alertTitle.textContent = "注册失败"
+                      alertMessage.textContent = "请检查表单中的错误。确保账号至少3位，密码至少6位且两次输入一致。"
+                      iconSuccess.hidden = true
+                      iconError.hidden = false
+                      alertBox.style.borderColor = "#e74c3c"
+                    }
+
+                    alertBox.scrollIntoView({ behavior: "smooth", block: "center" })
+                  })
+
+                  closeAlert.addEventListener("click", () => {
+                    alertBox.hidden = true
+                  })
+                })()
+              });
+            </script>
+          </div>
+        </div>
+        <a href="https://play.teleporthq.io/signup">
+          <div aria-label="Sign up to TeleportHQ" class="register-container6">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 19 21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="register-icon24"
+            >
+              <path
+                d="M9.1017 4.64355H2.17867C0.711684 4.64355 -0.477539 5.79975 -0.477539 7.22599V13.9567C-0.477539 15.3829 0.711684 16.5391 2.17867 16.5391H9.1017C10.5687 16.5391 11.7579 15.3829 11.7579 13.9567V7.22599C11.7579 5.79975 10.5687 4.64355 9.1017 4.64355Z"
+                fill="#B23ADE"
+              ></path>
+              <path
+                d="M10.9733 12.7878C14.4208 12.7878 17.2156 10.0706 17.2156 6.71886C17.2156 3.3671 14.4208 0.649963 10.9733 0.649963C7.52573 0.649963 4.73096 3.3671 4.73096 6.71886C4.73096 10.0706 7.52573 12.7878 10.9733 12.7878Z"
+                fill="#FF5C5C"
+              ></path>
+              <path
+                d="M17.7373 13.3654C19.1497 14.1588 19.1497 15.4634 17.7373 16.2493L10.0865 20.5387C8.67402 21.332 7.51855 20.6836 7.51855 19.0968V10.5141C7.51855 8.92916 8.67402 8.2807 10.0865 9.07221L17.7373 13.3654Z"
+                fill="#2874DE"
+              ></path>
+            </svg>
+            <span class="register-text2">Built in TeleportHQ</span>
+          </div>
+        </a>
+      </div>
+      <link
+        rel="canonical"
+        href="https://hefty-memorable-sandpiper-kzv6km.teleporthq.app/page"
+      />
+    </div>
+  </body>
+</html>

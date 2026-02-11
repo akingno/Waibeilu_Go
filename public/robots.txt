@@ -1,0 +1,7 @@
+User-agent: Googlebot
+Disallow: /nogooglebot/
+
+User-agent: *
+Allow: /
+
+Sitemap: https://hefty-memorable-sandpiper-kzv6km.teleporthq.app/sitemap.xml

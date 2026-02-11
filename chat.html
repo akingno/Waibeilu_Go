@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Waibeilu</title>
+    <meta property="og:title" content="Waibeilu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+
+    <style data-tag="reset-style-sheet">
+      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;  -webkit-font-smoothing: antialiased;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;  color: inherit;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}pre {  white-space: normal;}input {  padding: 2px 4px;}img {  display: block;}details {  display: block;  margin: 0;  padding: 0;}summary::-webkit-details-marker {  display: none;}[data-thq="accordion"] [data-thq="accordion-content"] {  max-height: 0;  overflow: hidden;  transition: max-height 0.3s ease-in-out;  padding: 0;}[data-thq="accordion"] details[data-thq="accordion-trigger"][open] + [data-thq="accordion-content"] {  max-height: 1000vh;}details[data-thq="accordion-trigger"][open] summary [data-thq="accordion-icon"] {  transform: rotate(180deg);}html { scroll-behavior: smooth  }
+    </style>
+    <style data-tag="default-style-sheet">
+      html {
+        font-family: Nunito;
+        font-size: 1rem;
+      }
+
+      body {
+        font-weight: 400;
+        font-style:normal;
+        text-decoration: undefined;
+        text-transform: undefined;
+        letter-spacing: 0.01em;
+        line-height: 1.6;
+        color: var(--color-on-surface);
+        background: var(--color-surface);
+
+        fill: var(--color-on-surface);
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/animate.css@4.1.1/animate.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css"
+    />
+  </head>
+  <body>
+    <link rel="stylesheet" href="./style.css" />
+    <div>
+      <link href="./chat.css" rel="stylesheet" />
+
+      <div class="chat-container1">
+        <navigation-wrapper class="navigation-wrapper">
+          <!--Navigation component-->
+          <div class="navigation-container1">
+            <nav class="navigation-wrapper">
+              <div class="navigation-container">
+                <a href="index.html">
+                  <div class="navigation-brand">
+                    <div class="navigation-brand-icon">
+                      <svg
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233a14 14 0 0 0 6.392 6.384"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>
+                      </svg>
+                    </div>
+                    <span class="section-title">外北陆热线</span>
+                  </div>
+                </a>
+                <div
+                  class="navigation-thq-navigation-desktop-links-elm navigation-desktop-links"
+                ></div>
+                <div class="navigation-actions">
+                  <a href="login.html">
+                    <div class="navigation-login-btn btn-primary btn">
+                      <svg
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        viewBox="0 0 24 24"
+                      >
+                        <g
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path
+                            d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
+                          ></path>
+                          <circle r="4" cx="12" cy="7"></circle>
+                        </g>
+                      </svg>
+                      <span>立即登录</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </nav>
+            <div id="mobile-overlay" class="navigation-mobile-overlay">
+              <div class="navigation-mobile-header">
+                <a href="index.html">
+                  <div class="navigation-brand">
+                    <span class="section-title">外北陆热线</span>
+                  </div>
+                </a>
+                <button
+                  id="mobile-close"
+                  aria-label="关闭菜单"
+                  class="navigation-mobile-close"
+                >
+                  <svg
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <g
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect x="3" y="3" rx="2" width="18" height="18"></rect>
+                      <path d="M3 9h18M9 16l3-3l3 3"></path>
+                    </g>
+                  </svg>
+                </button>
+              </div>
+              <div class="navigation-mobile-content">
+                <div class="navigation-mobile-links">
+                  <a href="index.html">
+                    <div class="navigation-mobile-link">
+                      <span>登录首页</span>
+                    </div>
+                  </a>
+                  <a href="register.html">
+                    <div class="navigation-mobile-link">
+                      <span>账号注册</span>
+                    </div>
+                  </a>
+                  <a href="chat.html">
+                    <div class="navigation-mobile-link">
+                      <span>聊天室</span>
+                    </div>
+                  </a>
+                </div>
+                <div class="navigation-mobile-footer">
+                  <a href="login.html">
+                    <div
+                      class="btn-lg btn-primary navigation-full-width-btn btn"
+                    >
+                      <span>开始拨打热线</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="navigation-container2">
+              <div class="navigation-container3">
+                <script defer="" data-name="navigation-logic">
+                  document.addEventListener('DOMContentLoaded', function() {
+                    (function(){
+                      const mobileToggle = document.getElementById("mobile-toggle")
+                      const mobileClose = document.getElementById("mobile-close")
+                      const mobileOverlay = document.getElementById("mobile-overlay")
+
+                      const openMobileMenu = () => {
+                        mobileOverlay.style.display = "flex"
+                        document.body.style.overflow = "hidden"
+                        mobileToggle.setAttribute("aria-expanded", "true")
+                      }
+
+                      const closeMobileMenu = () => {
+                        mobileOverlay.style.display = "none"
+                        document.body.style.overflow = ""
+                        mobileToggle.setAttribute("aria-expanded", "false")
+                      }
+
+                      mobileToggle.addEventListener("click", openMobileMenu)
+                      mobileClose.addEventListener("click", closeMobileMenu)
+
+                      // Close menu when clicking on a link
+                      const mobileLinks = document.querySelectorAll(".navigation-mobile-link")
+                      mobileLinks.forEach((link) => {
+                        link.addEventListener("click", closeMobileMenu)
+                      })
+
+                      // Handle ESC key to close menu
+                      document.addEventListener("keydown", (e) => {
+                        if (e.key === "Escape" && mobileOverlay.style.display === "flex") {
+                          closeMobileMenu()
+                        }
+                      })
+                    })()
+                  });
+                </script>
+              </div>
+            </div>
+          </div>
+        </navigation-wrapper>
+        <main class="chat-container">
+          <section class="chat-header">
+            <div class="chat-header-banner">
+              <h1 class="chat-header-title hero-title">
+                外北陆热线，当前在线人数
+              </h1>
+              <span id="onlineCount" class="chat-header-count">128</span>
+            </div>
+          </section>
+          <section class="user-profile">
+            <div class="user-profile-inner">
+              <div class="user-profile-card">
+                <div id="nicknameDisplayWrapper" class="user-profile-info">
+                  <div class="user-profile-label">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <g
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                      >
+                        <path
+                          d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
+                        ></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                      </g>
+                    </svg>
+                    <span>我的昵称:</span>
+                  </div>
+                  <button
+                    id="nicknameText"
+                    title="点击修改昵称"
+                    class="user-profile-name"
+                  >
+                    游客_5924
+                  </button>
+                </div>
+                <div id="nicknameEditWrapper" class="user-profile-edit hidden">
+                  <input
+                    type="text"
+                    id="nicknameInput"
+                    maxlength="12"
+                    placeholder="输入新昵称"
+                    class="user-profile-input"
+                  />
+                  <div class="user-profile-actions">
+                    <button id="saveNicknameBtn" class="btn btn-primary btn-sm">
+                      保存
+                    </button>
+                    <button
+                      id="cancelNicknameBtn"
+                      class="btn btn-sm btn-outline"
+                    >
+                      取消
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="system-notifications">
+            <div class="system-notifications-inner">
+              <div id="systemLog" class="system-timeline">
+                <div class="system-log-item">
+                  <span>系统：欢迎来到外北陆热线。</span>
+                </div>
+                <div id="typingIndicator" class="system-log-item typing hidden">
+                  <span>有人正在输入...</span>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="message-showcase">
+            <div class="message-showcase-inner">
+              <div id="messageList" class="message-list">
+                <div class="message-item">
+                  <div class="message-meta">
+                    <span class="message-user">刘克清</span>
+                    <span class="message-time">10:00:00</span>
+                  </div>
+                  <div class="message-content">
+                    <span>Wazzup Beijing</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="chat-input-area">
+            <div class="chat-input-inner">
+              <div class="chat-input-card">
+                <form
+                  id="chatForm"
+                  action="#"
+                  method="dialog"
+                  data-form-id="2b3b504b-6f9b-4953-9926-c18e9a7b06d0"
+                  class="chat-form"
+                >
+                  <textarea
+                    id="messageInput"
+                    placeholder="在此输入消息..."
+                    required="true"
+                    minlength="1"
+                    name="textarea"
+                    data-form-field-id="messageInput"
+                    class="chat-textarea"
+                  ></textarea>
+                  <button
+                    type="submit"
+                    id="thq_button_3OdC"
+                    name="button"
+                    data-form-field-id="thq_button_3OdC"
+                    class="chat-send-btn btn btn-primary"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11zm7.318-19.539l-10.94 10.939"
+                      ></path>
+                    </svg>
+                    <span>发送</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </section>
+        </main>
+        <div class="chat-container2">
+          <div class="chat-container3">
+            <script defer="" data-name="chat-logic">
+              document.addEventListener('DOMContentLoaded', function() {
+                (function(){
+                  const nicknameText = document.getElementById("nicknameText")
+                  const nicknameInput = document.getElementById("nicknameInput")
+                  const nicknameDisplayWrapper = document.getElementById("nicknameDisplayWrapper")
+                  const nicknameEditWrapper = document.getElementById("nicknameEditWrapper")
+                  const saveNicknameBtn = document.getElementById("saveNicknameBtn")
+                  const cancelNicknameBtn = document.getElementById("cancelNicknameBtn")
+
+                  const messageList = document.getElementById("messageList")
+                  const messageInput = document.getElementById("messageInput")
+                  const chatForm = document.getElementById("chatForm")
+                  const typingIndicator = document.getElementById("typingIndicator")
+
+                  const fontSizeSelect = document.getElementById("fontSizeSelect")
+                  const showTimeToggle = document.getElementById("showTimeToggle")
+
+                  nicknameText.addEventListener("click", () => {
+                    nicknameInput.value = nicknameText.textContent
+                    nicknameDisplayWrapper.classList.add("hidden")
+                    nicknameEditWrapper.classList.remove("hidden")
+                    nicknameInput.focus()
+                  })
+
+                  const closeEdit = () => {
+                    nicknameDisplayWrapper.classList.remove("hidden")
+                    nicknameEditWrapper.classList.add("hidden")
+                  }
+
+                  saveNicknameBtn.addEventListener("click", () => {
+                    if (nicknameInput.value.trim()) {
+                      nicknameText.textContent = nicknameInput.value.trim()
+                    }
+                    closeEdit()
+                  })
+
+                  cancelNicknameBtn.addEventListener("click", closeEdit)
+
+                  const scrollToBottom = () => {
+                    messageList.scrollTop = messageList.scrollHeight
+                  }
+
+                  const addMessage = (user, text) => {
+                    const now = new Date()
+                    const timeStr = now.toTimeString().split(" ")[0]
+
+                    const msgItem = document.createElement("div")
+                    msgItem.className = "message-item"
+
+                    const meta = document.createElement("div")
+                    meta.className = "message-meta"
+
+                    const userSpan = document.createElement("span")
+                    userSpan.className = "message-user"
+                    userSpan.textContent = user
+
+                    const timeSpan = document.createElement("span")
+                    timeSpan.className = "message-time"
+                    timeSpan.textContent = timeStr
+                    if (!showTimeToggle.checked) timeSpan.classList.add("hidden")
+
+                    const content = document.createElement("div")
+                    content.className = "message-content"
+                    content.textContent = text
+
+                    meta.appendChild(userSpan)
+                    meta.appendChild(timeSpan)
+                    msgItem.appendChild(meta)
+                    msgItem.appendChild(content)
+
+                    messageList.appendChild(msgItem)
+                    scrollToBottom()
+                  }
+
+                  chatForm.addEventListener("submit", (e) => {
+                    const text = messageInput.value.trim()
+                    if (text) {
+                      addMessage(nicknameText.textContent, text)
+                      messageInput.value = ""
+                      typingIndicator.classList.add("hidden")
+                    }
+                  })
+
+                  messageInput.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault()
+                      chatForm.dispatchEvent(new Event("submit"))
+                    }
+                  })
+
+                  let typingTimeout
+                  messageInput.addEventListener("input", () => {
+                    typingIndicator.classList.remove("hidden")
+                    clearTimeout(typingTimeout)
+                    typingTimeout = setTimeout(() => {
+                      typingIndicator.classList.add("hidden")
+                    }, 2000)
+                  })
+
+                  fontSizeSelect.addEventListener("change", (e) => {
+                    const size = e.target.value
+                    if (size === "small") {
+                      messageList.style.fontSize = "var(--font-size-base)"
+                    } else if (size === "medium") {
+                      messageList.style.fontSize = "var(--font-size-lg)"
+                    } else if (size === "large") {
+                      messageList.style.fontSize = "var(--font-size-xl)"
+                    }
+                  })
+
+                  showTimeToggle.addEventListener("change", (e) => {
+                    const times = document.querySelectorAll(".message-time")
+                    times.forEach((t) => {
+                      if (e.target.checked) t.classList.remove("hidden")
+                      else t.classList.add("hidden")
+                    })
+                  })
+
+                  scrollToBottom()
+                })()
+              });
+            </script>
+          </div>
+        </div>
+        <a href="https://play.teleporthq.io/signup">
+          <div aria-label="Sign up to TeleportHQ" class="chat-container4">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 19 21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="chat-icon16"
+            >
+              <path
+                d="M9.1017 4.64355H2.17867C0.711684 4.64355 -0.477539 5.79975 -0.477539 7.22599V13.9567C-0.477539 15.3829 0.711684 16.5391 2.17867 16.5391H9.1017C10.5687 16.5391 11.7579 15.3829 11.7579 13.9567V7.22599C11.7579 5.79975 10.5687 4.64355 9.1017 4.64355Z"
+                fill="#B23ADE"
+              ></path>
+              <path
+                d="M10.9733 12.7878C14.4208 12.7878 17.2156 10.0706 17.2156 6.71886C17.2156 3.3671 14.4208 0.649963 10.9733 0.649963C7.52573 0.649963 4.73096 3.3671 4.73096 6.71886C4.73096 10.0706 7.52573 12.7878 10.9733 12.7878Z"
+                fill="#FF5C5C"
+              ></path>
+              <path
+                d="M17.7373 13.3654C19.1497 14.1588 19.1497 15.4634 17.7373 16.2493L10.0865 20.5387C8.67402 21.332 7.51855 20.6836 7.51855 19.0968V10.5141C7.51855 8.92916 8.67402 8.2807 10.0865 9.07221L17.7373 13.3654Z"
+                fill="#2874DE"
+              ></path>
+            </svg>
+            <span class="chat-text8">Built in TeleportHQ</span>
+          </div>
+        </a>
+      </div>
+      <link
+        rel="canonical"
+        href="https://hefty-memorable-sandpiper-kzv6km.teleporthq.app/page2"
+      />
+    </div>
+  </body>
+</html>
