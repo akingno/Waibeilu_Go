@@ -67,7 +67,6 @@
     <link rel="stylesheet" href="./style.css" />
     <div>
       <link href="./register.css" rel="stylesheet" />
-
       <div class="register-container1">
         <navigation-wrapper class="navigation-wrapper">
           <!--Navigation component-->
@@ -231,212 +230,51 @@
           </div>
         </navigation-wrapper>
         <main class="registration-page">
-          <section class="form-section">
-            <div class="form-container">
-              <div class="form-modal">
-                <h1 class="-----hero-title hero-title">外北陆热线 - 注册</h1>
-                <form
-                  action="/api/register"
-                  method="POST"
-                  id="registrationForm"
-                  data-form-id="9a473588-b2e7-41ad-af2c-ef0cb7886164"
-                  class="register-form"
-                >
-                  <div class="input-group">
-                    <label for="username" class="section-content">账号</label>
-                    <div class="input-wrapper">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="input-icon"
-                      >
-                        <path
-                          d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
-                        ></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                      </svg>
-                      <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        required="true"
-                        minlength="3"
-                        placeholder="请输入您的账号"
-                        data-form-field-id="username"
-                        class="form-input"
-                      />
+            <section class="form-section">
+                <div class="form-container">
+                    <div class="form-modal">
+                        <h1 class="hero-title">外北陆热线 - 注册</h1>
+                        <form action="/api/register" method="POST" id="registrationForm">
+                            <div class="input-group">
+                                <label class="section-content">账号</label>
+                                <div class="input-wrapper">
+                                    <input type="text" name="username" required minlength="3" placeholder="请输入您的账号" class="form-input" />
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label class="section-content">密码</label>
+                                <div class="input-wrapper">
+                                    <input type="password" name="password" id="password" required minlength="6" placeholder="请输入密码" class="form-input" />
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label class="section-content">再次输入密码</label>
+                                <div class="input-wrapper">
+                                    <input type="password" id="confirm-password" required placeholder="请再次输入密码" class="form-input" />
+                                </div>
+                            </div>
+                            <div class="button-row">
+                                <button type="submit" class="btn btn-primary btn-lg">确认注册</button>
+                                <a href="/" class="btn btn-outline btn-lg">返回登录</a>
+                            </div>
+                        </form>
                     </div>
-                  </div>
-                  <div class="input-group">
-                    <label for="password" class="section-content">密码</label>
-                    <div class="input-wrapper">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="input-icon"
-                      >
-                        <rect
-                          width="18"
-                          height="11"
-                          x="3"
-                          y="11"
-                          rx="2"
-                          ry="2"
-                        ></rect>
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                      </svg>
-                      <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        required="true"
-                        minlength="6"
-                        placeholder="请输入密码"
-                        data-form-field-id="password"
-                        class="form-input"
-                      />
-                    </div>
-                  </div>
-                  <div class="input-group">
-                    <label for="confirm-password" class="section-content">
-                      再次输入密码
-                    </label>
-                    <div class="input-wrapper">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="input-icon"
-                      >
-                        <rect
-                          width="18"
-                          height="11"
-                          x="3"
-                          y="11"
-                          rx="2"
-                          ry="2"
-                        ></rect>
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                      </svg>
-                      <input
-                        type="password"
-                        id="confirm-password"
-                        name="confirm-password"
-                        required="true"
-                        placeholder="请再次输入密码"
-                        data-form-field-id="confirm-password"
-                        class="form-input"
-                      />
-                    </div>
-                  </div>
-                  <div class="button-row">
-                    <button
-                      type="submit"
-                      id="thq_button_JleT"
-                      name="button"
-                      data-form-field-id="thq_button_JleT"
-                      class="-----btn-primary -----btn-lg btn btn-primary btn-lg"
-                    >
-                      确认注册
-                    </button>
-                    <a href="index.html">
-                      <div
-                        class="-----btn-outline -----btn-lg btn btn-outline btn-lg"
-                      >
-                        <span>返回登录</span>
-                      </div>
-                    </a>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </section>
-          <section class="validation-section">
-            <div class="validation-container">
-              <h2 class="-----section-title section-title">安全校验</h2>
-              <ul class="validation-list">
-                <li id="rule-length" class="validation-item">
-                  <div class="icon-box">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="status-icon"
-                    >
-                      <path d="M20 6L9 17l-5-5"></path>
-                    </svg>
-                  </div>
-                  <span class="section-content">密码长度至少为 6 位字符</span>
-                </li>
-                <li id="rule-match" class="validation-item">
-                  <div class="icon-box">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="status-icon"
-                    >
-                      <path d="M20 6L9 17l-5-5"></path>
-                    </svg>
-                  </div>
-                  <span class="section-content">
-                    两次输入的密码必须完全一致
-                  </span>
-                </li>
-                <li id="rule-username" class="validation-item">
-                  <div class="icon-box">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="status-icon"
-                    >
-                      <path d="M20 6L9 17l-5-5"></path>
-                    </svg>
-                  </div>
-                  <span class="section-content">账号需包含至少 3 个字符</span>
-                </li>
-              </ul>
-            </div>
-          </section>
+                </div>
+            </section>
+        </main>
+        <script>
+              // 仅保留两次密码一致性校验
+              document.getElementById("registrationForm").onsubmit = function(e) {
+                  const p1 = document.getElementById("password").value;
+                  const p2 = document.getElementById("confirm-password").value;
+                  if (p1!== p2) {
+                      alert("两次输入的密码不一致！");
+                      e.preventDefault();
+                      return false;
+                  }
+                  return true;
+              };
+          </script>
           <section class="result-section">
             <div class="result-container">
               <div id="registration-alert" class="alert-box">
@@ -595,37 +433,7 @@
             </script>
           </div>
         </div>
-        <a href="https://play.teleporthq.io/signup">
-          <div aria-label="Sign up to TeleportHQ" class="register-container6">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 19 21"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              class="register-icon24"
-            >
-              <path
-                d="M9.1017 4.64355H2.17867C0.711684 4.64355 -0.477539 5.79975 -0.477539 7.22599V13.9567C-0.477539 15.3829 0.711684 16.5391 2.17867 16.5391H9.1017C10.5687 16.5391 11.7579 15.3829 11.7579 13.9567V7.22599C11.7579 5.79975 10.5687 4.64355 9.1017 4.64355Z"
-                fill="#B23ADE"
-              ></path>
-              <path
-                d="M10.9733 12.7878C14.4208 12.7878 17.2156 10.0706 17.2156 6.71886C17.2156 3.3671 14.4208 0.649963 10.9733 0.649963C7.52573 0.649963 4.73096 3.3671 4.73096 6.71886C4.73096 10.0706 7.52573 12.7878 10.9733 12.7878Z"
-                fill="#FF5C5C"
-              ></path>
-              <path
-                d="M17.7373 13.3654C19.1497 14.1588 19.1497 15.4634 17.7373 16.2493L10.0865 20.5387C8.67402 21.332 7.51855 20.6836 7.51855 19.0968V10.5141C7.51855 8.92916 8.67402 8.2807 10.0865 9.07221L17.7373 13.3654Z"
-                fill="#2874DE"
-              ></path>
-            </svg>
-            <span class="register-text2">Built in TeleportHQ</span>
-          </div>
-        </a>
       </div>
-      <link
-        rel="canonical"
-        href="https://hefty-memorable-sandpiper-kzv6km.teleporthq.app/page"
-      />
     </div>
   </body>
 </html>

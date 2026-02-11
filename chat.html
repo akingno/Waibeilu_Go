@@ -100,7 +100,7 @@
                   class="navigation-thq-navigation-desktop-links-elm navigation-desktop-links"
                 ></div>
                 <div class="navigation-actions">
-                  <a href="login.html">
+                  <a href="index.html">
                     <div class="navigation-login-btn btn-primary btn">
                       <svg
                         width="24"
@@ -177,7 +177,7 @@
                   </a>
                 </div>
                 <div class="navigation-mobile-footer">
-                  <a href="login.html">
+                  <a href="index.html">
                     <div
                       class="btn-lg btn-primary navigation-full-width-btn btn"
                     >
@@ -236,7 +236,7 @@
               <h1 class="chat-header-title hero-title">
                 外北陆热线，当前在线人数
               </h1>
-              <span id="onlineCount" class="chat-header-count">128</span>
+              <span id="onlineCount" class="chat-header-count">1</span>
             </div>
           </section>
           <section class="user-profile">
@@ -270,7 +270,7 @@
                     title="点击修改昵称"
                     class="user-profile-name"
                   >
-                    游客_5924
+                    游客
                   </button>
                 </div>
                 <div id="nicknameEditWrapper" class="user-profile-edit hidden">
@@ -373,162 +373,88 @@
         </main>
         <div class="chat-container2">
           <div class="chat-container3">
-            <script defer="" data-name="chat-logic">
-              document.addEventListener('DOMContentLoaded', function() {
-                (function(){
-                  const nicknameText = document.getElementById("nicknameText")
-                  const nicknameInput = document.getElementById("nicknameInput")
-                  const nicknameDisplayWrapper = document.getElementById("nicknameDisplayWrapper")
-                  const nicknameEditWrapper = document.getElementById("nicknameEditWrapper")
-                  const saveNicknameBtn = document.getElementById("saveNicknameBtn")
-                  const cancelNicknameBtn = document.getElementById("cancelNicknameBtn")
+            <script defer data-name="chat-logic">
+              function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
+                return null;
+              }
+            document.addEventListener('DOMContentLoaded', function() {
+                const host = window.location.host;
+                const ws = new WebSocket(`ws://${host}/ws`);
+                
+                // 1. 从 URL 获取初始用户名 (?name=xxx)
+                const params = new URLSearchParams(window.location.search);
+                let currentUsername = getCookie("username") || "匿名用户_" + Math.floor(Math.random()*1000);
+                console.log("当前登录用户:", currentUsername);
 
-                  const messageList = document.getElementById("messageList")
-                  const messageInput = document.getElementById("messageInput")
-                  const chatForm = document.getElementById("chatForm")
-                  const typingIndicator = document.getElementById("typingIndicator")
+                const messageList = document.getElementById("messageList");
+                const messageInput = document.getElementById("messageInput");
+                const chatForm = document.getElementById("chatForm");
+                const nicknameText = document.getElementById("nicknameText");
+                const onlineCount = document.getElementById("onlineCount");
 
-                  const fontSizeSelect = document.getElementById("fontSizeSelect")
-                  const showTimeToggle = document.getElementById("showTimeToggle")
+                // 初始化界面显示
+                nicknameText.textContent = currentUsername;
 
-                  nicknameText.addEventListener("click", () => {
-                    nicknameInput.value = nicknameText.textContent
-                    nicknameDisplayWrapper.classList.add("hidden")
-                    nicknameEditWrapper.classList.remove("hidden")
-                    nicknameInput.focus()
-                  })
+                ws.onopen = () => console.log("✅ WebSocket 已连接");
+                ws.onerror = (err) => console.error("❌ WebSocket 错误:", err);
+                ws.onclose = () => alert("会话已断开，请重新登录");
 
-                  const closeEdit = () => {
-                    nicknameDisplayWrapper.classList.remove("hidden")
-                    nicknameEditWrapper.classList.add("hidden")
+                // 3. 接收消息（处理聊天和实时人数）
+                ws.onmessage = function(event) {
+                    const data = JSON.parse(event.data);
+                    
+                    if (data.type === "count") {
+                        onlineCount.textContent = data.count;
+                    } else {
+                        // 后端发来的是聊天消息，渲染出来
+                        appendMessage(data.sender, data.content, data.created_at);
+                    }
+                };
+
+                chatForm.onsubmit = (e) => {
+                  e.preventDefault();
+                  const text = messageInput.value.trim();
+                  
+                  // 确保名字不为空且 WebSocket 已连接
+                  if (text && ws.readyState === WebSocket.OPEN) {
+                      const payload = {
+                          sender: currentUsername || "未知用户",
+                          content: text,
+                          type: "chat" // 明确指定类型
+                      };
+                      console.log("🚀 正在发送消息:", payload);
+                      ws.send(JSON.stringify(payload));
+                      messageInput.value = "";
+                  } else {
+                      console.error("❌ 无法发送：", { state: ws.readyState, text: text });
                   }
+                };
 
-                  saveNicknameBtn.addEventListener("click", () => {
-                    if (nicknameInput.value.trim()) {
-                      nicknameText.textContent = nicknameInput.value.trim()
-                    }
-                    closeEdit()
-                  })
-
-                  cancelNicknameBtn.addEventListener("click", closeEdit)
-
-                  const scrollToBottom = () => {
-                    messageList.scrollTop = messageList.scrollHeight
-                  }
-
-                  const addMessage = (user, text) => {
-                    const now = new Date()
-                    const timeStr = now.toTimeString().split(" ")[0]
-
-                    const msgItem = document.createElement("div")
-                    msgItem.className = "message-item"
-
-                    const meta = document.createElement("div")
-                    meta.className = "message-meta"
-
-                    const userSpan = document.createElement("span")
-                    userSpan.className = "message-user"
-                    userSpan.textContent = user
-
-                    const timeSpan = document.createElement("span")
-                    timeSpan.className = "message-time"
-                    timeSpan.textContent = timeStr
-                    if (!showTimeToggle.checked) timeSpan.classList.add("hidden")
-
-                    const content = document.createElement("div")
-                    content.className = "message-content"
-                    content.textContent = text
-
-                    meta.appendChild(userSpan)
-                    meta.appendChild(timeSpan)
-                    msgItem.appendChild(meta)
-                    msgItem.appendChild(content)
-
-                    messageList.appendChild(msgItem)
-                    scrollToBottom()
-                  }
-
-                  chatForm.addEventListener("submit", (e) => {
-                    const text = messageInput.value.trim()
-                    if (text) {
-                      addMessage(nicknameText.textContent, text)
-                      messageInput.value = ""
-                      typingIndicator.classList.add("hidden")
-                    }
-                  })
-
-                  messageInput.addEventListener("keydown", (e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault()
-                      chatForm.dispatchEvent(new Event("submit"))
-                    }
-                  })
-
-                  let typingTimeout
-                  messageInput.addEventListener("input", () => {
-                    typingIndicator.classList.remove("hidden")
-                    clearTimeout(typingTimeout)
-                    typingTimeout = setTimeout(() => {
-                      typingIndicator.classList.add("hidden")
-                    }, 2000)
-                  })
-
-                  fontSizeSelect.addEventListener("change", (e) => {
-                    const size = e.target.value
-                    if (size === "small") {
-                      messageList.style.fontSize = "var(--font-size-base)"
-                    } else if (size === "medium") {
-                      messageList.style.fontSize = "var(--font-size-lg)"
-                    } else if (size === "large") {
-                      messageList.style.fontSize = "var(--font-size-xl)"
-                    }
-                  })
-
-                  showTimeToggle.addEventListener("change", (e) => {
-                    const times = document.querySelectorAll(".message-time")
-                    times.forEach((t) => {
-                      if (e.target.checked) t.classList.remove("hidden")
-                      else t.classList.add("hidden")
-                    })
-                  })
-
-                  scrollToBottom()
-                })()
-              });
+                function appendMessage(user, text, time) {
+                    const timeStr = time? new Date(time).toLocaleTimeString() : new Date().toLocaleTimeString();
+                    const msgItem = document.createElement("div");
+                    msgItem.className = "message-item";
+                    // 如果是自己发的消息，颜色区分一下
+                    const nameColor = (user === currentUsername)? "#B23ADE" : "#2874DE";
+                    
+                    msgItem.innerHTML = `
+                        <div class="message-meta">
+                            <span class="message-user" style="font-weight:bold; color:${nameColor}">${user}</span>
+                            <span class="message-time" style="font-size:0.7em; color:#999; margin-left:10px;">${timeStr}</span>
+                        </div>
+                        <div class="message-content"><span>${text}</span></div>
+                    `;
+                    messageList.appendChild(msgItem);
+                    messageList.scrollTop = messageList.scrollHeight;
+                }
+            });
             </script>
           </div>
         </div>
-        <a href="https://play.teleporthq.io/signup">
-          <div aria-label="Sign up to TeleportHQ" class="chat-container4">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 19 21"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              class="chat-icon16"
-            >
-              <path
-                d="M9.1017 4.64355H2.17867C0.711684 4.64355 -0.477539 5.79975 -0.477539 7.22599V13.9567C-0.477539 15.3829 0.711684 16.5391 2.17867 16.5391H9.1017C10.5687 16.5391 11.7579 15.3829 11.7579 13.9567V7.22599C11.7579 5.79975 10.5687 4.64355 9.1017 4.64355Z"
-                fill="#B23ADE"
-              ></path>
-              <path
-                d="M10.9733 12.7878C14.4208 12.7878 17.2156 10.0706 17.2156 6.71886C17.2156 3.3671 14.4208 0.649963 10.9733 0.649963C7.52573 0.649963 4.73096 3.3671 4.73096 6.71886C4.73096 10.0706 7.52573 12.7878 10.9733 12.7878Z"
-                fill="#FF5C5C"
-              ></path>
-              <path
-                d="M17.7373 13.3654C19.1497 14.1588 19.1497 15.4634 17.7373 16.2493L10.0865 20.5387C8.67402 21.332 7.51855 20.6836 7.51855 19.0968V10.5141C7.51855 8.92916 8.67402 8.2807 10.0865 9.07221L17.7373 13.3654Z"
-                fill="#2874DE"
-              ></path>
-            </svg>
-            <span class="chat-text8">Built in TeleportHQ</span>
-          </div>
-        </a>
       </div>
-      <link
-        rel="canonical"
-        href="https://hefty-memorable-sandpiper-kzv6km.teleporthq.app/page2"
-      />
     </div>
   </body>
 </html>
