@@ -51,44 +51,38 @@ func (h *Hub) broadcastMessage(msg Message) {
         }
     }
 }
-
-func (h *Hub) run() {
-	for {
-		select {
-		case client := <-h.register:
+func(h *Hub) run() {
+    for {
+        select {
+        case client := <-h.register:
             h.mu.Lock()
             h.clients[client] = true
             count := len(h.clients)
+            // 使用辅助函数，直接循环发送，不走通道
             h.broadcastMessage(Message{Type: "count", Count: count})
             h.mu.Unlock()
             log.Printf("【WS日志】新连接，当前在线: %d 人", count)
-		case client := <-h.unregister:
-			h.mu.Lock()
-			if _, ok := h.clients[client]; ok {
-				delete(h.clients, client)
-				close(client.send)
-			}
-			count := len(h.clients)
-			h.mu.Unlock()
-			log.Printf("【WS日志】用户离开，当前在线: %d 人", count)
-			h.broadcast <- Message{Type: "count", Count: count}
-		case msg := <-h.broadcast:
-			h.mu.Lock()
-			for client := range h.clients {
-				select {
-				case client.send <- msg:
-				default:
-					close(client.send)
-					delete(h.clients, client)
-				}
-			}
-			h.mu.Unlock()
-		}
-	}
+
+        case client := <-h.unregister:
+            h.mu.Lock()
+            if _, ok := h.clients[client]; ok {
+                delete(h.clients, client)
+                close(client.send)
+            }
+            count := len(h.clients)
+            h.broadcastMessage(Message{Type: "count", Count: count})
+            h.mu.Unlock()
+            log.Printf("【WS日志】用户离开，当前在线: %d 人", count)
+
+        case msg := <-h.broadcast:
+            h.mu.Lock()
+            h.broadcastMessage(msg)
+            h.mu.Unlock()
+        }
+    }
 }
 
 // --- WebSocket 客户端 ---
-
 var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool { return true },
 }
