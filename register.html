@@ -238,7 +238,7 @@
                             <div class="input-group">
                                 <label class="section-content">账号</label>
                                 <div class="input-wrapper">
-                                    <input type="text" name="username" required minlength="3" placeholder="请输入您的账号" class="form-input" />
+                                    <input type="text" id="username" name="username" required minlength="2" maxlength="32" placeholder="请输入您的账号" class="form-input" />
                                 </div>
                             </div>
                             <div class="input-group">
@@ -374,7 +374,7 @@
                     const passVal = passwordInput.value
                     const confirmVal = confirmInput.value
 
-                    if (userVal.length >= 3) {
+                    if (userVal.trim().length >= 2) {
                       ruleUsername.classList.add("is-valid")
                     } else {
                       ruleUsername.classList.remove("is-valid")
@@ -400,7 +400,7 @@
                   form.addEventListener("submit", (e) => {
                     e.preventDefault()
 
-                    const isUserValid = usernameInput.value.length >= 3
+                    const isUserValid = usernameInput.value.trim().length >= 2
                     const isPassValid = passwordInput.value.length >= 6
                     const isMatchValid = passwordInput.value === confirmInput.value
 
