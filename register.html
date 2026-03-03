@@ -238,7 +238,7 @@
                             <div class="input-group">
                                 <label class="section-content">账号</label>
                                 <div class="input-wrapper">
-                                    <input type="text" name="username" required minlength="3" placeholder="请输入您的账号" class="form-input" />
+                                    <input type="text" id="username" name="username" required minlength="2" maxlength="32" placeholder="请输入您的账号" class="form-input" />
                                 </div>
                             </div>
                             <div class="input-group">
@@ -374,7 +374,7 @@
                     const passVal = passwordInput.value
                     const confirmVal = confirmInput.value
 
-                    if (userVal.length >= 3) {
+                    if (userVal.trim().length >= 2) {
                       ruleUsername.classList.add("is-valid")
                     } else {
                       ruleUsername.classList.remove("is-valid")
@@ -398,31 +398,27 @@
                   confirmInput.addEventListener("input", validate)
 
                   form.addEventListener("submit", (e) => {
-                    e.preventDefault()
-
-                    const isUserValid = usernameInput.value.length >= 3
+                    const isUserValid = usernameInput.value.trim().length >= 2
                     const isPassValid = passwordInput.value.length >= 6
                     const isMatchValid = passwordInput.value === confirmInput.value
 
-                    alertBox.hidden = false
-
-                    if (isUserValid && isPassValid && isMatchValid) {
-                      alertTitle.textContent = "注册成功！"
-                      alertMessage.textContent = "欢迎加入外北陆热线。您的账号已创建，现在可以返回登录界面。"
-                      iconSuccess.hidden = false
-                      iconError.hidden = true
-                      alertBox.style.borderColor = "#2ecc71"
-                      form.reset()
-                      validate()
-                    } else {
+                    if (!isUserValid || !isPassValid || !isMatchValid) {
+                      e.preventDefault()
+                      alertBox.hidden = false
                       alertTitle.textContent = "注册失败"
-                      alertMessage.textContent = "请检查表单中的错误。确保账号至少3位，密码至少6位且两次输入一致。"
+                      alertMessage.textContent = "请检查表单中的错误。确保账号至少2位，密码至少6位且两次输入一致。"
                       iconSuccess.hidden = true
                       iconError.hidden = false
                       alertBox.style.borderColor = "#e74c3c"
+                      alertBox.scrollIntoView({ behavior: "smooth", block: "center" })
+                      return
                     }
 
-                    alertBox.scrollIntoView({ behavior: "smooth", block: "center" })
+                    const submitButton = form.querySelector('button[type="submit"]')
+                    if (submitButton) {
+                      submitButton.disabled = true
+                      submitButton.textContent = "正在创建账号..."
+                    }
                   })
 
                   closeAlert.addEventListener("click", () => {

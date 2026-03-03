@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/url"
 	"sync"
 	"time"
 
@@ -42,44 +43,44 @@ func newHub() *Hub {
 }
 
 func (h *Hub) broadcastMessage(msg Message) {
-    for client := range h.clients {
-        select {
-        case client.send <- msg:
-        default:
-            close(client.send)
-            delete(h.clients, client)
-        }
-    }
+	for client := range h.clients {
+		select {
+		case client.send <- msg:
+		default:
+			close(client.send)
+			delete(h.clients, client)
+		}
+	}
 }
-func(h *Hub) run() {
-    for {
-        select {
-        case client := <-h.register:
-            h.mu.Lock()
-            h.clients[client] = true
-            count := len(h.clients)
-            // 使用辅助函数，直接循环发送，不走通道
-            h.broadcastMessage(Message{Type: "count", Count: count})
-            h.mu.Unlock()
-            log.Printf("【WS日志】新连接，当前在线: %d 人", count)
+func (h *Hub) run() {
+	for {
+		select {
+		case client := <-h.register:
+			h.mu.Lock()
+			h.clients[client] = true
+			count := len(h.clients)
+			// 使用辅助函数，直接循环发送，不走通道
+			h.broadcastMessage(Message{Type: "count", Count: count})
+			h.mu.Unlock()
+			log.Printf("【WS日志】新连接，当前在线: %d 人", count)
 
-        case client := <-h.unregister:
-            h.mu.Lock()
-            if _, ok := h.clients[client]; ok {
-                delete(h.clients, client)
-                close(client.send)
-            }
-            count := len(h.clients)
-            h.broadcastMessage(Message{Type: "count", Count: count})
-            h.mu.Unlock()
-            log.Printf("【WS日志】用户离开，当前在线: %d 人", count)
+		case client := <-h.unregister:
+			h.mu.Lock()
+			if _, ok := h.clients[client]; ok {
+				delete(h.clients, client)
+				close(client.send)
+			}
+			count := len(h.clients)
+			h.broadcastMessage(Message{Type: "count", Count: count})
+			h.mu.Unlock()
+			log.Printf("【WS日志】用户离开，当前在线: %d 人", count)
 
-        case msg := <-h.broadcast:
-            h.mu.Lock()
-            h.broadcastMessage(msg)
-            h.mu.Unlock()
-        }
-    }
+		case msg := <-h.broadcast:
+			h.mu.Lock()
+			h.broadcastMessage(msg)
+			h.mu.Unlock()
+		}
+	}
 }
 
 // --- WebSocket 客户端 ---
@@ -100,7 +101,7 @@ func (c *Client) readPump(db *sql.DB) {
 	}()
 	for {
 		var msg Message
-		if err := c.conn.ReadJSON(&msg); err!= nil {
+		if err := c.conn.ReadJSON(&msg); err != nil {
 			break
 		}
 		msg.Type = "chat"
@@ -115,7 +116,7 @@ func (c *Client) readPump(db *sql.DB) {
 func (c *Client) writePump() {
 	defer c.conn.Close()
 	for msg := range c.send {
-		if err := c.conn.WriteJSON(msg); err!= nil {
+		if err := c.conn.WriteJSON(msg); err != nil {
 			break
 		}
 	}
@@ -126,7 +127,7 @@ func (c *Client) writePump() {
 func main() {
 	// 1. 初始化数据库 [4, 5]
 	db, err := sql.Open("sqlite3", "./chat.db?_journal=WAL")
-	if err!= nil {
+	if err != nil {
 		log.Fatal(err)
 	}
 	db.Exec(`CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TEXT);`)
@@ -139,16 +140,20 @@ func main() {
 
 	// 根路径：登陆界面
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path!= "/" {
-			// 处理根目录下的 style.css, index.css 等文件 
+		if r.URL.Path != "/" {
+			// 处理根目录下的 style.css, index.css 等文件
 			http.FileServer(http.Dir(".")).ServeHTTP(w, r)
+			return
+		}
+		if _, err := r.Cookie("username"); err == nil {
+			http.Redirect(w, r, "/chat.html", http.StatusFound)
 			return
 		}
 		log.Println("【访问日志】有人打开了登陆页面 (/)")
 		http.ServeFile(w, r, "index.html") // 发送你的登陆界面
 	})
 
-	// 显式提供 components 文件夹服务 (用于 navigation.html) 
+	// 显式提供 components 文件夹服务 (用于 navigation.html)
 	http.Handle("/components/", http.StripPrefix("/components/", http.FileServer(http.Dir("./components"))))
 
 	// 注册页面
@@ -159,7 +164,7 @@ func main() {
 
 	// 聊天室页面（需检查登录
 	http.HandleFunc("/chat.html", func(w http.ResponseWriter, r *http.Request) {
-		if _, err := r.Cookie("username"); err!= nil {
+		if _, err := r.Cookie("username"); err != nil {
 			log.Println("【拦截日志】未登陆用户尝试进入聊天室，踢回登陆页")
 			http.Redirect(w, r, "/", http.StatusFound)
 			return
@@ -169,17 +174,24 @@ func main() {
 
 	// --- 接口路由 ---
 
-	// 登录接口 
+	// 登录接口
 	http.HandleFunc("/api/login", func(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
 		u, p := r.FormValue("username"), r.FormValue("password")
-		log.Printf("【登陆尝试】用户名: %s, 密码: %s", u, p)
+		log.Printf("【登陆尝试】用户名: %s", u)
 		var savedPwd string
 		err := db.QueryRow("SELECT password FROM users WHERE username=?", u).Scan(&savedPwd)
 		if err == nil && savedPwd == p {
 			// 成功：设置 Cookie 并跳转到 chat.html
 			log.Printf("【登陆成功】欢迎回来, %s！正在跳转聊天室...", u)
-			http.SetCookie(w, &http.Cookie{Name: "username", Value: u, Path: "/", MaxAge: 86400})
+			http.SetCookie(w, &http.Cookie{
+				Name:     "username",
+				Value:    url.QueryEscape(u),
+				Path:     "/",
+				MaxAge:   3 * 24 * 60 * 60,
+				Expires:  time.Now().Add(72 * time.Hour),
+				SameSite: http.SameSiteLaxMode,
+			})
 			http.Redirect(w, r, "/chat.html", http.StatusFound)
 		} else {
 			log.Printf("【登陆失败】用户名或密码不匹配")
@@ -191,9 +203,9 @@ func main() {
 	http.HandleFunc("/api/register", func(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
 		u, p := r.FormValue("username"), r.FormValue("password")
-		log.Printf("【注册请求】用户名: %s, 密码: %s", u, p)
+		log.Printf("【注册请求】用户名: %s", u)
 		_, err := db.Exec("INSERT INTO users (username, password) VALUES (?,?)", u, p)
-		if err!= nil {
+		if err != nil {
 			w.Write([]byte("注册失败: 用户名可能已存在"))
 			return
 		}
@@ -209,7 +221,7 @@ func main() {
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}
-		
+
 		conn, _ := upgrader.Upgrade(w, r, nil)
 		if err != nil {
 			log.Printf("【WS升级失败】: %v", err)
@@ -227,7 +239,11 @@ func main() {
 			rows.Scan(&m.Sender, &m.Content, &m.CreatedAt)
 			client.send <- m
 		}
-		log.Printf("【WS连接成功】用户: %s", cookie.Value)
+		decodedUsername, decodeErr := url.QueryUnescape(cookie.Value)
+		if decodeErr != nil {
+			decodedUsername = cookie.Value
+		}
+		log.Printf("【WS连接成功】用户: %s", decodedUsername)
 
 		go client.writePump()
 		go client.readPump(db)
