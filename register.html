@@ -404,25 +404,23 @@
                     const isPassValid = passwordInput.value.length >= 6
                     const isMatchValid = passwordInput.value === confirmInput.value
 
-                    alertBox.hidden = false
-
-                    if (isUserValid && isPassValid && isMatchValid) {
-                      alertTitle.textContent = "注册成功！"
-                      alertMessage.textContent = "欢迎加入外北陆热线。您的账号已创建，现在可以返回登录界面。"
-                      iconSuccess.hidden = false
-                      iconError.hidden = true
-                      alertBox.style.borderColor = "#2ecc71"
-                      form.reset()
-                      validate()
-                    } else {
+                    if (!isUserValid || !isPassValid || !isMatchValid) {
+                      e.preventDefault()
+                      alertBox.hidden = false
                       alertTitle.textContent = "注册失败"
-                      alertMessage.textContent = "请检查表单中的错误。确保账号至少3位，密码至少6位且两次输入一致。"
+                      alertMessage.textContent = "请检查表单中的错误。确保账号至少2位，密码至少6位且两次输入一致。"
                       iconSuccess.hidden = true
                       iconError.hidden = false
                       alertBox.style.borderColor = "#e74c3c"
+                      alertBox.scrollIntoView({ behavior: "smooth", block: "center" })
+                      return
                     }
 
-                    alertBox.scrollIntoView({ behavior: "smooth", block: "center" })
+                    const submitButton = form.querySelector('button[type="submit"]')
+                    if (submitButton) {
+                      submitButton.disabled = true
+                      submitButton.textContent = "正在创建账号..."
+                    }
                   })
 
                   closeAlert.addEventListener("click", () => {
