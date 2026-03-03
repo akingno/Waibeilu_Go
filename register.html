@@ -398,6 +398,8 @@
                   confirmInput.addEventListener("input", validate)
 
                   form.addEventListener("submit", (e) => {
+                    e.preventDefault()
+
                     const isUserValid = usernameInput.value.trim().length >= 2
                     const isPassValid = passwordInput.value.length >= 6
                     const isMatchValid = passwordInput.value === confirmInput.value
