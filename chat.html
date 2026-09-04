@@ -29,39 +29,7 @@
         fill: var(--color-on-surface);
       }
     </style>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/animate.css@4.1.1/animate.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css"
-    />
+    <script type="module" src="./vendor/emoji-picker-element/index.js"></script>
   </head>
   <body>
     <link rel="stylesheet" href="./style.css" />
@@ -333,6 +301,26 @@
                   data-form-id="2b3b504b-6f9b-4953-9926-c18e9a7b06d0"
                   class="chat-form"
                 >
+                  <div class="emoji-control">
+                    <button
+                      type="button"
+                      id="emojiToggle"
+                      class="emoji-toggle"
+                      aria-label="打开表情面板"
+                      aria-expanded="false"
+                      title="选择表情"
+                    >
+                      <span aria-hidden="true">😀</span>
+                      <span class="emoji-toggle-label">表情</span>
+                    </button>
+                    <emoji-picker
+                      id="emojiPicker"
+                      class="emoji-picker hidden"
+                      locale="zh"
+                      data-source="./vendor/emoji-picker-data/zh/emojibase/data.json"
+                      emoji-version="17.0"
+                    ></emoji-picker>
+                  </div>
                   <textarea
                     id="messageInput"
                     placeholder="在此输入消息..."
@@ -410,7 +398,8 @@
                         onlineCount.textContent = data.count;
                     } else {
                         // 后端发来的是聊天消息，渲染出来
-                        appendMessage(data.sender, data.content, data.created_at);
+                        const ready = window.fluentEmojiReady || Promise.resolve();
+                        ready.then(() => appendMessage(data.sender, data.content, data.created_at));
                     }
                 };
 
@@ -439,18 +428,173 @@
                     msgItem.className = "message-item";
                     // 如果是自己发的消息，颜色区分一下
                     const nameColor = (user === currentUsername)? "#B23ADE" : "#2874DE";
-                    
-                    msgItem.innerHTML = `
-                        <div class="message-meta">
-                            <span class="message-user" style="font-weight:bold; color:${nameColor}">${user}</span>
-                            <span class="message-time" style="font-size:0.7em; color:#999; margin-left:10px;">${timeStr}</span>
-                        </div>
-                        <div class="message-content"><span>${text}</span></div>
-                    `;
+
+                    const meta = document.createElement("div");
+                    meta.className = "message-meta";
+                    const userElement = document.createElement("span");
+                    userElement.className = "message-user";
+                    userElement.style.cssText = `font-weight:bold; color:${nameColor}`;
+                    userElement.textContent = user;
+                    const timeElement = document.createElement("span");
+                    timeElement.className = "message-time";
+                    timeElement.style.cssText = "font-size:0.7em; color:#999; margin-left:10px;";
+                    timeElement.textContent = timeStr;
+                    meta.append(userElement, timeElement);
+
+                    const content = document.createElement("div");
+                    content.className = "message-content";
+                    appendFluentEmojiText(content, text);
+                    msgItem.append(meta, content);
                     messageList.appendChild(msgItem);
                     messageList.scrollTop = messageList.scrollHeight;
                 }
+
+                function appendFluentEmojiText(container, text) {
+                    const emojiMap = window.fluentEmojiMap || new Map();
+                    const emojiList = [...emojiMap.keys()].sort((a, b) => b.length - a.length);
+                    if (!emojiList.length) {
+                        container.textContent = text;
+                        return;
+                    }
+
+                    const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+                    const matcher = new RegExp(`(${emojiList.map(escapeRegExp).join("|")})`, "gu");
+                    for (const part of text.split(matcher)) {
+                        const emoji = emojiMap.get(part) || emojiMap.get(part.replace(/\uFE0F/g, ""));
+                        if (!emoji) {
+                            container.appendChild(document.createTextNode(part));
+                            continue;
+                        }
+                        const image = document.createElement("img");
+                        image.className = "fluent-emoji";
+                        image.src = `./vendor/fluent-emoji/flat/${emoji.slug}.svg`;
+                        image.alt = part;
+                        image.title = emoji.name;
+                        container.appendChild(image);
+                    }
+                }
             });
+            </script>
+            <script type="module">
+              import zhCN from "./vendor/emoji-picker-element/i18n/zh_CN.js";
+
+              const picker = document.getElementById("emojiPicker");
+              const emojiToggle = document.getElementById("emojiToggle");
+              const messageInput = document.getElementById("messageInput");
+              const emojiControl = document.querySelector(".emoji-control");
+
+              let indicatorFrame;
+              const syncPickerIndicator = () => {
+                const shadowRoot = picker.shadowRoot;
+                const nav = shadowRoot?.querySelector(".nav");
+                const indicator = shadowRoot?.querySelector(".indicator");
+                const selectedButton = nav?.querySelector('[aria-selected="true"]');
+                if (!nav || !indicator || !selectedButton) return;
+
+                const navRect = nav.getBoundingClientRect();
+                const selectedRect = selectedButton.getBoundingClientRect();
+                indicator.style.width = `${selectedRect.width}px`;
+                indicator.style.transform = `translateX(${selectedRect.left - navRect.left}px)`;
+              };
+
+              const queuePickerIndicatorSync = () => {
+                if (indicatorFrame !== undefined) cancelAnimationFrame(indicatorFrame);
+                indicatorFrame = requestAnimationFrame(() => {
+                  indicatorFrame = undefined;
+                  syncPickerIndicator();
+                });
+              };
+
+              window.fluentEmojiMap = new Map();
+              window.fluentEmojiBySlug = new Map();
+              window.fluentEmojiReady = (async () => {
+                const catalog = await fetch("./vendor/fluent-emoji/map.json").then((response) => {
+                  if (!response.ok) throw new Error(`无法加载 Fluent Emoji 数据: ${response.status}`);
+                  return response.json();
+                });
+
+                for (const emoji of catalog.emojis) {
+                  window.fluentEmojiMap.set(emoji.unicode, emoji);
+                  window.fluentEmojiBySlug.set(emoji.slug, emoji);
+                  const withoutVariationSelector = emoji.unicode.replace(/\uFE0F/g, "");
+                  if (withoutVariationSelector !== emoji.unicode) {
+                    window.fluentEmojiMap.set(withoutVariationSelector, emoji);
+                  }
+                }
+
+                for (const emoji of catalog.variants || []) {
+                  window.fluentEmojiMap.set(emoji.unicode, emoji);
+                  const withoutVariationSelector = emoji.unicode.replace(/\uFE0F/g, "");
+                  if (withoutVariationSelector !== emoji.unicode) {
+                    window.fluentEmojiMap.set(withoutVariationSelector, emoji);
+                  }
+                }
+
+                await customElements.whenDefined("emoji-picker");
+                const pickerLayoutStyle = document.createElement("style");
+                pickerLayoutStyle.textContent = `
+                  .indicator-wrapper { position: relative; }
+                  .indicator { flex: 0 0 auto; }
+                `;
+                picker.shadowRoot?.appendChild(pickerLayoutStyle);
+                picker.i18n = zhCN;
+                picker.customEmoji = catalog.emojis.map((emoji) => ({
+                  name: emoji.slug,
+                  shortcodes: [emoji.name, ...emoji.shortcodes],
+                  url: `./vendor/fluent-emoji/flat/${emoji.slug}.svg`,
+                  category: emoji.group,
+                }));
+                queuePickerIndicatorSync();
+              })().catch((error) => {
+                console.error("❌ Fluent Emoji 初始化失败:", error);
+              });
+
+              picker.addEventListener("click", queuePickerIndicatorSync);
+              picker.addEventListener("keydown", queuePickerIndicatorSync);
+              if (picker.shadowRoot) {
+                const pickerMutationObserver = new MutationObserver(queuePickerIndicatorSync);
+                pickerMutationObserver.observe(picker.shadowRoot, {
+                  childList: true,
+                  subtree: true,
+                  attributes: true,
+                  attributeFilter: ["aria-selected"],
+                });
+              }
+              if (window.ResizeObserver) {
+                new ResizeObserver(queuePickerIndicatorSync).observe(picker);
+              }
+
+              const setPickerOpen = (isOpen) => {
+                picker.classList.toggle("hidden", !isOpen);
+                emojiToggle.setAttribute("aria-expanded", String(isOpen));
+              };
+
+              emojiToggle.addEventListener("click", (event) => {
+                event.stopPropagation();
+                setPickerOpen(picker.classList.contains("hidden"));
+              });
+
+              picker.addEventListener("emoji-click", (event) => {
+                const selected = event.detail;
+                const emoji = selected.unicode || window.fluentEmojiBySlug.get(selected.name)?.unicode;
+                if (!emoji) return;
+
+                const start = messageInput.selectionStart;
+                const end = messageInput.selectionEnd;
+                messageInput.value = `${messageInput.value.slice(0, start)}${emoji}${messageInput.value.slice(end)}`;
+                messageInput.focus();
+                const cursorPosition = start + emoji.length;
+                messageInput.setSelectionRange(cursorPosition, cursorPosition);
+                setPickerOpen(false);
+              });
+
+              document.addEventListener("click", (event) => {
+                if (!emojiControl.contains(event.target)) setPickerOpen(false);
+              });
+
+              document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") setPickerOpen(false);
+              });
             </script>
           </div>
         </div>
