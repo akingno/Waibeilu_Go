@@ -1884,6 +1884,62 @@
   display: flex;
   align-items: flex-end;
 }
+
+.emoji-control {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.emoji-toggle {
+  color: var(--color);
+  border: 1px solid var(--color);
+  cursor: pointer;
+  height: 60px;
+  display: flex;
+  padding: 0 var(--spacing-sm);
+  align-items: center;
+  gap: 4px;
+  background: var(--background-color);
+  font-family: "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.emoji-toggle:hover,
+.emoji-toggle[aria-expanded="true"] {
+  color: var(--background-color);
+  background: var(--color);
+}
+
+.emoji-toggle > span:first-child {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.emoji-toggle-label {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-xs);
+}
+
+.emoji-picker {
+  left: 0;
+  bottom: calc(100% + 8px);
+  width: min(360px, calc(100vw - 48px));
+  height: 420px;
+  z-index: 20;
+  position: absolute;
+  --background: var(--background-color);
+  --border-color: var(--color);
+  --border-size: 2px;
+  --button-hover-background: color-mix(in srgb, var(--color) 12%, transparent);
+  --button-active-background: color-mix(in srgb, var(--color) 18%, transparent);
+  --category-font-color: var(--color);
+  --input-border-color: var(--color);
+  --input-font-color: var(--color);
+  --input-placeholder-color: color-mix(in srgb, var(--color) 60%, transparent);
+  --indicator-color: var(--color);
+  --emoji-size: 1.5rem;
+  box-shadow: 4px 4px 0 var(--color);
+}
  
 .settings-summary {
   cursor: pointer;
@@ -1940,7 +1996,16 @@
 .message-content {
   font-size: var(--font-size-base);
   word-break: break-all;
+  white-space: pre-wrap;
   line-height: 1.4;
+}
+
+.fluent-emoji {
+  width: 1.35em;
+  height: 1.35em;
+  display: inline-block;
+  margin: 0 0.05em;
+  vertical-align: -0.25em;
 }
  
 .chat-textarea {
@@ -2179,6 +2244,9 @@
   .chat-send-btn {
     padding: 0 var(--spacing-md);
   }
+  .emoji-toggle {
+    padding: 0 var(--spacing-md);
+  }
   .chat-send-btn  span {
     display: none;
   }
@@ -2257,6 +2325,18 @@
   .chat-form {
     align-items: stretch;
     flex-direction: column;
+  }
+  .emoji-control {
+    align-self: flex-start;
+  }
+  .emoji-toggle {
+    height: 44px;
+  }
+  .emoji-picker {
+    left: auto;
+    right: 0;
+    bottom: calc(100% + 8px);
+    height: min(420px, 70vh);
   }
   .chat-send-btn {
     height: 44px;

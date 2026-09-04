@@ -1,0 +1,4 @@
+# Local SQLite runtime data may contain credentials and private messages.
+chat.db
+chat.db-shm
+chat.db-wal
