@@ -7,7 +7,7 @@ import { DatabaseSync } from "node:sqlite";
 const HOST = "127.0.0.1";
 const PORT = 8080;
 const ROOT = process.cwd();
-const clients = new Set();
+const clients = new Map();
 
 const db = new DatabaseSync(join(ROOT, "chat.db"));
 db.exec("PRAGMA journal_mode=WAL");
@@ -171,11 +171,12 @@ function send(socket, message) {
 }
 
 function broadcast(message) {
-  for (const socket of clients) send(socket, message);
+  for (const socket of clients.keys()) send(socket, message);
 }
 
 function broadcastCount() {
-  broadcast({ type: "count", count: clients.size });
+  const users = [...new Set(clients.values())].sort();
+  broadcast({ type: "count", count: users.length, users });
 }
 
 function decodeFrames(state, chunk, onMessage, onClose) {
@@ -239,7 +240,7 @@ server.on("upgrade", (req, socket) => {
       `Sec-WebSocket-Accept: ${accept}\r\n\r\n`,
   );
 
-  clients.add(socket);
+  clients.set(socket, username);
   const state = { buffer: Buffer.alloc(0), socket };
   let closed = false;
   const close = () => {
@@ -291,7 +292,7 @@ server.listen(PORT, HOST, () => {
 });
 
 function shutdown() {
-  for (const socket of clients) socket.destroy();
+  for (const socket of clients.keys()) socket.destroy();
   server.close(() => {
     db.close();
     process.exit(0);
