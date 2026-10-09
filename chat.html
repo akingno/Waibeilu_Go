@@ -30,6 +30,7 @@
       }
     </style>
     <script type="module" src="./vendor/emoji-picker-element/index.js"></script>
+    <script defer src="./chat-photos.js"></script>
   </head>
   <body>
     <link rel="stylesheet" href="./style.css" />
@@ -322,7 +323,8 @@
                   data-form-id="2b3b504b-6f9b-4953-9926-c18e9a7b06d0"
                   class="chat-form"
                 >
-                  <div class="emoji-control">
+                  <div class="chat-tools">
+                    <div class="emoji-control">
                     <button
                       type="button"
                       id="emojiToggle"
@@ -341,6 +343,9 @@
                       data-source="./vendor/emoji-picker-data/zh/emojibase/data.json"
                       emoji-version="17.0"
                     ></emoji-picker>
+                    </div>
+                    <button type="button" id="photoChoose" class="photo-toggle" aria-label="选择图片" title="选择小于 6MB 的 JPG、PNG 或 WebP 图片">图片</button>
+                    <input type="file" id="photoInput" class="hidden" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" />
                   </div>
                   <textarea
                     id="messageInput"
@@ -376,10 +381,26 @@
                     <span>发送</span>
                   </button>
                 </form>
+                <div id="photoDraft" class="photo-draft hidden">
+                  <img id="photoDraftPreview" alt="待发送图片预览" />
+                  <span id="photoDraftName"></span>
+                  <button type="button" id="photoSend">发送图片</button>
+                  <button type="button" id="photoCancel">取消</button>
+                </div>
+                <p id="photoStatus" class="photo-status" role="status" aria-live="polite"></p>
               </div>
             </div>
           </section>
         </main>
+        <dialog id="photoViewer" class="photo-viewer" aria-labelledby="photoViewerTitle">
+          <div class="photo-viewer-toolbar">
+            <h2 id="photoViewerTitle">图片预览</h2>
+            <a id="photoDownload" download>下载原图</a>
+            <button type="button" id="photoViewerClose" aria-label="关闭图片预览" autofocus>关闭</button>
+          </div>
+          <p id="photoViewerStatus" role="status" aria-live="polite"></p>
+          <img id="photoFullImage" alt="聊天图片" />
+        </dialog>
         <div class="chat-container2">
           <div class="chat-container3">
             <script defer data-name="chat-logic">
@@ -408,6 +429,17 @@
                 const onlineUsersClose = document.getElementById("onlineUsersClose");
                 const onlineUsersStatus = document.getElementById("onlineUsersStatus");
                 const onlineUsersList = document.getElementById("onlineUsersList");
+                const renderedMessages = new Set();
+
+                function receiveMessage(data) {
+                    const ready = window.fluentEmojiReady || Promise.resolve();
+                    ready.then(() => {
+                        if (data.id != null && renderedMessages.has(data.id)) return;
+                        if (data.id != null) renderedMessages.add(data.id);
+                        appendMessage(data.sender, data.content, data.created_at, data.image);
+                    });
+                }
+                document.addEventListener("photo-uploaded", event => receiveMessage(event.detail));
 
                 onlineUsersToggle.addEventListener("click", () => {
                     onlineUsersSidebar.showModal();
@@ -485,8 +517,7 @@
                         }
                     } else if (data.type === "chat") {
                         // 后端发来的是聊天消息，渲染出来
-                        const ready = window.fluentEmojiReady || Promise.resolve();
-                        ready.then(() => appendMessage(data.sender, data.content, data.created_at));
+                        receiveMessage(data);
                     }
                 };
 
@@ -509,7 +540,7 @@
                   }
                 };
 
-                function appendMessage(user, text, time) {
+                function appendMessage(user, text, time, image) {
                     const timeStr = time? new Date(time).toLocaleTimeString() : new Date().toLocaleTimeString();
                     const msgItem = document.createElement("div");
                     msgItem.className = "message-item";
@@ -530,7 +561,8 @@
 
                     const content = document.createElement("div");
                     content.className = "message-content";
-                    appendFluentEmojiText(content, text);
+                    if (image) content.appendChild(window.chatPhotos.createThumbnail(image));
+                    else appendFluentEmojiText(content, text);
                     msgItem.append(meta, content);
                     messageList.appendChild(msgItem);
                     messageList.scrollTop = messageList.scrollHeight;

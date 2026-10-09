@@ -1,6 +1,72 @@
 .navigation-wrapper {
   display: contents;
 }
+
+.chat-tools { display: flex; flex-shrink: 0; gap: var(--spacing-sm); }
+.photo-toggle {
+  height: 60px;
+  padding: 0 var(--spacing-sm);
+  border: 1px solid var(--color);
+  color: var(--color);
+  cursor: pointer;
+}
+.photo-toggle:hover { background: var(--color); color: var(--background-color); }
+.photo-draft {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.photo-draft img { width: 64px; height: 64px; object-fit: contain; }
+#photoDraftName { flex: 1; min-width: 100px; overflow-wrap: anywhere; font-size: 0.85rem; }
+.photo-draft button, .photo-viewer-toolbar button, .photo-viewer-toolbar a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid currentColor;
+  cursor: pointer;
+}
+.photo-status { font-size: 0.85rem; overflow-wrap: anywhere; }
+.photo-status:not(:empty) { margin-top: 8px; }
+.photo-toggle:disabled, .photo-draft button:disabled { opacity: 0.55; cursor: wait; }
+.chat-photo { display: block; max-width: 100%; margin-top: 8px; cursor: zoom-in; }
+.chat-photo img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(240px, 100%);
+  max-height: 200px;
+  object-fit: contain;
+  border: 1px solid var(--color);
+}
+.photo-viewer-open { overflow: hidden; }
+.photo-viewer {
+  margin: auto;
+  width: min(1100px, calc(100% - 24px));
+  max-width: calc(100% - 24px);
+  max-height: calc(100dvh - 24px);
+  padding: 12px;
+  border: 2px solid var(--color);
+  color: var(--color);
+  background: var(--background-color);
+  overflow: auto;
+}
+.photo-viewer::backdrop { background: rgba(0, 0, 0, 0.8); }
+.photo-viewer-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 12px; }
+.photo-viewer-toolbar h2 { flex: 1; font-size: 1rem; white-space: nowrap; }
+#photoFullImage { display: block; max-width: 100%; max-height: 75vh; max-height: 75dvh; margin: auto; object-fit: contain; }
+.photo-toggle:focus-visible, .chat-photo:focus-visible, .photo-draft button:focus-visible,
+.photo-viewer-toolbar a:focus-visible, .photo-viewer-toolbar button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+@media (max-width: 479px) {
+  .chat-tools { align-self: flex-start; }
+  .photo-toggle { height: 44px; }
+}
  
 .navigation-container1 {
   display: contents;

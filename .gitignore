@@ -2,3 +2,5 @@
 chat.db
 chat.db-shm
 chat.db-wal
+node_modules/
+data/

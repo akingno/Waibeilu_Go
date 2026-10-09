@@ -3,12 +3,18 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "parcel-bundler": "^1.6.1",
     "@teleporthq/react-components": "latest",
     "next": "^12.1.10",
+    "parcel-bundler": "^1.6.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "sharp": "^0.35.5"
   },
-  "scripts": {},
-  "devDependencies": {}
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "devDependencies": {
+    "jsdom": "^26.1.0"
+  }
 }

@@ -1,18 +1,118 @@
 import http from "node:http";
-import { createHash } from "node:crypto";
-import { readFile } from "node:fs/promises";
-import { extname, join, normalize } from "node:path";
+import { createHash, randomUUID } from "node:crypto";
+import { readFile, mkdir, writeFile, unlink } from "node:fs/promises";
+import { extname, join, resolve } from "node:path";
 import { DatabaseSync } from "node:sqlite";
+import { MAX_PHOTO_BYTES, PHOTO_TYPES, PhotoError, readPhoto, preparePhoto } from "./photos.mjs";
 
 const HOST = "127.0.0.1";
-const PORT = 8080;
+const PORT = Number(process.env.PORT || 8080);
 const ROOT = process.cwd();
+const DATA_DIR = resolve(process.env.CHAT_DATA_DIR || join(ROOT, "data"));
+const PHOTO_DIR = join(DATA_DIR, "uploads");
+await mkdir(PHOTO_DIR, { recursive: true });
 const clients = new Map();
+let uploadsInProgress = 0;
 
-const db = new DatabaseSync(join(ROOT, "chat.db"));
+const db = new DatabaseSync(process.env.CHAT_DATA_DIR ? join(DATA_DIR, "chat.db") : join(ROOT, "chat.db"));
 db.exec("PRAGMA journal_mode=WAL");
 db.exec("CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TEXT)");
 db.exec("CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY AUTOINCREMENT, sender TEXT, content TEXT, created_at DATETIME)");
+if (!db.prepare("PRAGMA table_info(messages)").all().some(column => column.name === "image_id")) {
+  db.exec("ALTER TABLE messages ADD COLUMN image_id TEXT");
+}
+db.exec(`CREATE TABLE IF NOT EXISTS images (
+  id TEXT PRIMARY KEY, filename TEXT NOT NULL, mime TEXT NOT NULL,
+  extension TEXT NOT NULL, width INTEGER NOT NULL, height INTEGER NOT NULL
+)`);
+
+function messageToWire(message) {
+  const { image_id, ...fields } = message;
+  const image = image_id ? db.prepare("SELECT * FROM images WHERE id = ?").get(image_id) : null;
+  return {
+    type: "chat", ...fields,
+    ...(image && { image: {
+      filename: image.filename, width: image.width, height: image.height,
+      url: `/api/photos/${image.id}`, thumbnail: `/api/photos/${image.id}/thumbnail`,
+      download: `/api/photos/${image.id}/download`,
+    } }),
+  };
+}
+
+function photoUser(req) {
+  const username = cookies(req).username;
+  return username && db.prepare("SELECT username FROM users WHERE username = ?").get(username)?.username;
+}
+
+async function uploadPhoto(req, res) {
+  const username = photoUser(req);
+  if (!username) throw new PhotoError(401, "登录已失效，请重新登录后上传");
+  if (req.headers["sec-fetch-site"] === "cross-site" ||
+      (req.headers.origin && new URL(req.headers.origin).host !== req.headers.host)) {
+    throw new PhotoError(403, "请从聊天室页面上传图片");
+  }
+  const contentType = (req.headers["content-type"] || "").split(";")[0].toLowerCase();
+  if (!PHOTO_TYPES.has(contentType)) throw new PhotoError(415, "仅支持 JPG、PNG 和 WebP 图片");
+  if (Number(req.headers["content-length"]) >= MAX_PHOTO_BYTES) throw new PhotoError(413, "请选择小于 6MB 的图片");
+  if (uploadsInProgress >= 2) throw new PhotoError(503, "当前上传人数较多，请稍后重试");
+  let name;
+  try { name = decodeURIComponent(req.headers["x-file-name"] || "photo"); }
+  catch { throw new PhotoError(400, "图片文件名无效"); }
+  uploadsInProgress++;
+  const id = randomUUID();
+  const originalPath = join(PHOTO_DIR, id);
+  const thumbnailPath = join(PHOTO_DIR, `${id}.webp`);
+  let committed = false;
+  try {
+    const bytes = await readPhoto(req);
+    const photo = await preparePhoto(bytes, contentType, name);
+    await writeFile(originalPath, bytes, { flag: "wx" });
+    await writeFile(thumbnailPath, photo.thumbnail, { flag: "wx" });
+    const created_at = new Date().toISOString();
+    let messageId;
+    db.exec("BEGIN");
+    try {
+      db.prepare("INSERT INTO images VALUES (?, ?, ?, ?, ?, ?)").run(id, photo.filename, photo.mime, photo.extension, photo.width, photo.height);
+      messageId = Number(db.prepare("INSERT INTO messages (sender, content, created_at, image_id) VALUES (?, '', ?, ?)").run(username, created_at, id).lastInsertRowid);
+      db.exec("COMMIT");
+      committed = true;
+    } catch (error) {
+      db.exec("ROLLBACK");
+      throw error;
+    }
+    const message = messageToWire({ id: messageId, sender: username, content: "", created_at, image_id: id });
+    broadcast(message);
+    res.writeHead(201, { "Content-Type": "application/json; charset=utf-8" });
+    res.end(JSON.stringify(message));
+  } finally {
+    uploadsInProgress--;
+    if (!committed) await Promise.allSettled([unlink(originalPath), unlink(thumbnailPath)]);
+  }
+}
+
+async function servePhoto(req, res, id, variant) {
+  if (!photoUser(req)) throw new PhotoError(401, "请先登录后查看图片");
+  const photo = db.prepare("SELECT * FROM images WHERE id = ?").get(id);
+  if (!photo) throw new PhotoError(404, "图片不存在");
+  let bytes;
+  try { bytes = await readFile(join(PHOTO_DIR, variant === "thumbnail" ? `${id}.webp` : id)); }
+  catch (error) {
+    if (error.code === "ENOENT") throw new PhotoError(404, "图片不存在");
+    throw error;
+  }
+  const headers = {
+    "Content-Type": variant === "thumbnail" ? "image/webp" : photo.mime,
+    "Content-Length": bytes.length,
+    "X-Content-Type-Options": "nosniff",
+    "Cache-Control": "private, no-cache",
+  };
+  if (variant === "download") {
+    const filename = encodeURIComponent(photo.filename).replace(/['()*]/g, char => `%${char.charCodeAt(0).toString(16)}`);
+    headers["Content-Disposition"] = `attachment; filename="photo.${photo.extension}"; filename*=UTF-8''${filename}`;
+  }
+  res.writeHead(200, headers);
+  res.end(bytes);
+}
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -57,8 +157,17 @@ async function formBody(req) {
 }
 
 async function serveFile(res, relativePath) {
-  const safePath = normalize(relativePath).replace(/^(\.\.(\\|\/|$))+/, "");
-  const filePaths = [join(ROOT, safePath), join(ROOT, "public", safePath)];
+  const safePath = relativePath.replace(/\\/g, "/");
+  // Only public assets and the existing root pages are static files. Uploaded
+  // photos must pass through the authenticated photo routes, even thumbnails.
+  if (safePath.split("/").some(part => part.startsWith(".")) || safePath.startsWith("/")) {
+    text(res, 404, "Not Found");
+    return;
+  }
+  const filePaths = [join(ROOT, "public", safePath)];
+  if (/^[\w-]+\.(html|css)$/.test(safePath) || /^components\/[\w-]+\.html$/.test(safePath)) {
+    filePaths.unshift(join(ROOT, safePath));
+  }
   const allowed = [".html", ".css", ".js", ".json", ".txt", ".svg", ".png", ".webp"];
   if (!allowed.includes(extname(safePath).toLowerCase())) {
     text(res, 404, "Not Found");
@@ -88,6 +197,15 @@ const server = http.createServer(async (req, res) => {
   const url = new URL(req.url || "/", `http://${req.headers.host || `${HOST}:${PORT}`}`);
 
   try {
+    if (req.method === "POST" && url.pathname === "/api/photos") {
+      await uploadPhoto(req, res);
+      return;
+    }
+    const photoRoute = url.pathname.match(/^\/api\/photos\/([0-9a-f-]{36})(?:\/(thumbnail|download))?$/);
+    if (req.method === "GET" && photoRoute) {
+      await servePhoto(req, res, photoRoute[1], photoRoute[2]);
+      return;
+    }
     if (req.method === "POST" && url.pathname === "/api/login") {
       const form = await formBody(req);
       const username = (form.get("username") || "").trim();
@@ -142,6 +260,11 @@ const server = http.createServer(async (req, res) => {
     const relativePath = decodeURIComponent(url.pathname.slice(1));
     await serveFile(res, relativePath);
   } catch (error) {
+    if (error instanceof PhotoError) {
+      req.resume();
+      text(res, error.status, error.message);
+      return;
+    }
     console.error(error);
     text(res, 500, "服务器内部错误");
   }
@@ -252,10 +375,10 @@ server.on("upgrade", (req, socket) => {
   };
 
   const history = db
-    .prepare("SELECT sender, content, created_at FROM messages ORDER BY id DESC LIMIT 100")
+    .prepare("SELECT id, sender, content, created_at, image_id FROM messages ORDER BY id DESC LIMIT 100")
     .all()
     .reverse();
-  for (const message of history) send(socket, { type: "chat", ...message });
+  for (const message of history) send(socket, messageToWire(message));
   broadcastCount();
 
   socket.on("data", (chunk) =>
@@ -268,12 +391,12 @@ server.on("upgrade", (req, socket) => {
           const content = String(incoming.content || "").trim();
           if (!content || content.length > 4000) return;
           const createdAt = new Date().toISOString();
-          db.prepare("INSERT INTO messages (sender, content, created_at) VALUES (?, ?, ?)").run(
+          const result = db.prepare("INSERT INTO messages (sender, content, created_at) VALUES (?, ?, ?)").run(
             username,
             content,
             createdAt,
           );
-          broadcast({ type: "chat", sender: username, content, created_at: createdAt });
+          broadcast({ type: "chat", id: Number(result.lastInsertRowid), sender: username, content, created_at: createdAt });
         } catch (error) {
           console.error("无效的 WebSocket 消息", error.message);
         }
@@ -287,7 +410,7 @@ server.on("upgrade", (req, socket) => {
 });
 
 server.listen(PORT, HOST, () => {
-  console.log(`外北陆热线已启动：http://${HOST}:${PORT}`);
+  console.log(`外北陆热线已启动：http://${HOST}:${server.address().port}`);
   console.log("按 Ctrl+C 停止服务");
 });
 
