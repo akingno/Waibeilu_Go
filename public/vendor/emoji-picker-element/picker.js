@@ -1495,7 +1495,10 @@ function createRoot (shadowRoot, props) {
     const emojiSummary = [...state.currentEmojis, ...state.currentFavorites]
       .find(_ => (_.id === unicodeOrName));
     const skinTonedUnicode = emojiSummary.unicode && unicodeWithSkin(emojiSummary, state.currentSkinTone);
-    await state.database.incrementFavoriteEmojiCount(unicodeOrName);
+    // Selecting an emoji must not depend on a successful browser-storage write.
+    state.database.incrementFavoriteEmojiCount(unicodeOrName).catch(err => {
+      console.warn('Could not save favorite emoji', err);
+    });
     return {
       emoji,
       skinTone: state.currentSkinTone,

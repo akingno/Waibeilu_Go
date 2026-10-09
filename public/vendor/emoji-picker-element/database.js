@@ -807,6 +807,15 @@ function binaryStringToArrayBuffer(binary) {
 // generate a checksum based on the stringified JSON
 async function jsonChecksum (object) {
   const inString = JSON.stringify(object);
+  // Plain HTTP deployments may not expose Web Crypto. This checksum only
+  // invalidates the local emoji cache; it is not a security/integrity check.
+  if (!globalThis.crypto?.subtle) {
+    let hash = 2166136261;
+    for (let i = 0; i < inString.length; i++) {
+      hash = Math.imul(hash ^ inString.charCodeAt(i), 16777619);
+    }
+    return `fnv1a-${inString.length}-${(hash >>> 0).toString(16)}`
+  }
   let inBuffer = binaryStringToArrayBuffer(inString);
 
   // this does not need to be cryptographically secure, SHA-1 is fine

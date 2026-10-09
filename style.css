@@ -2333,10 +2333,13 @@
     height: 44px;
   }
   .emoji-picker {
-    left: auto;
-    right: 0;
+    left: 0;
+    right: auto;
     bottom: calc(100% + 8px);
     height: min(420px, 70vh);
+    height: min(420px, 70dvh);
+    --emoji-padding: 0.25rem;
+    --category-emoji-size: 1rem;
   }
   .chat-send-btn {
     height: 44px;
